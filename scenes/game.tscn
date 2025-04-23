@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://urcus516sp53"]
+
+[ext_resource type="PackedScene" uid="uid://vfhxw5n8bujt" path="res://scenes/game/elevator.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://ck7vpchey3oga" path="res://scripts/room.tscn" id="2_yqjtg"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Elevator" parent="." instance=ExtResource("1_uwrxv")]
+
+[node name="Room" parent="." instance=ExtResource("2_yqjtg")]
+
+[connection signal="left_door_opened" from="Elevator" to="Room" method="_on_elevator_left_door_opened"]
+[connection signal="right_door_opened" from="Elevator" to="Room" method="_on_elevator_right_door_opened"]
