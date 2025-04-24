@@ -21,7 +21,8 @@ class_name LevelData
 @export var level_visual: Texture2D
 @export var buildings: Dictionary[int, SerializedBuilding]
 
-func _init(_visual = null, _buildings = {}) -> void:
+# _init called before @export initializations are done
+func _init(_visual = null, _buildings = {} as Dictionary[int, SerializedBuilding]) -> void:
   level_visual = _visual
   buildings = _buildings
 

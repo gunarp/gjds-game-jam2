@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://cedf4im28r8qs"]
+[gd_scene load_steps=2 format=3 uid="uid://dngqx6fuwsul1"]
+
+[ext_resource type="Script" uid="uid://thucii217obx" path="res://scripts/game/level.gd" id="1_gttig"]
 
 [node name="Level" type="Node2D"]
+scale = Vector2(1.01613, 1)
+script = ExtResource("1_gttig")
