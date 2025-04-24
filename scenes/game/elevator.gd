@@ -10,7 +10,7 @@ var dest_floor: int = 0
 var min_height = 0
 var max_height: int
 var elevator_num = 0
-var occupancy = []
+var occupancy: Array[Passenger] = []
 var max_occupancy = 1
 var is_empty = 1 # may be a redundant flag? thought it may be useful for animations
 

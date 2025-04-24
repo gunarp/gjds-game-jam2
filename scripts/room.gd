@@ -3,9 +3,9 @@ extends Node
 class_name Room
 
 # TODO: turn room_number into @onready ? or @export ??
-var room_number: int
+@export var room_number: int
 var floor_number = 0 # not sure about this part yet.
-var queue = []
+var queue: Array[Passenger] = []
 var max_size = 10
 
 # may want a flag for when a room is being adjusted, 
