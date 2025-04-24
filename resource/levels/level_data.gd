@@ -1,7 +1,14 @@
 extends Resource
 
-class_name LevelData
+@export var level_visual: Texture2D
+@export var initial_level_state: Dictionary
 
-@export var map_data: MapData
-@export var unit_stat_table: Array[UnitStats]
-@export var complication_table: Array[ComplicationData]
+# Dictionary layout of initial level state
+# {
+#   building_id: {
+#     floor: {
+#       [initial_passengers]
+#     }
+#   }
+# }
+
