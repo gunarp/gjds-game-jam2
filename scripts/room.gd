@@ -1,13 +1,23 @@
 extends Node
 
-# TODO: turn room_number into @onready ?
-var room_number = 0
+class_name Room
+
+# TODO: turn room_number into @onready ? or @export ??
+var room_number: int
 var floor_number = 0 # not sure about this part yet.
 var queue = []
 var max_size = 10
 
+# may want a flag for when a room is being adjusted, 
+# so we don't have two processes writing to the same queue at once?
+enum STATE {IDLE, ADJUSTING}
+
 func _to_string() -> String:
-  return str(queue)
+  return "Room " + str(room_number) + ": " + str(queue)
+
+# init function to set room_number?
+func _init(room_num: int):
+  room_number = room_num
 
 func _ready():
   pass
