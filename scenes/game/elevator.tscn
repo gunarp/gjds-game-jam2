@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vfhxw5n8bujt"]
+
+[ext_resource type="Script" uid="uid://c6s2g3n7pv75c" path="res://scenes/game/elevator.gd" id="1_j2jxn"]
+
+[node name="Elevator" type="Node2D"]
+script = ExtResource("1_j2jxn")
