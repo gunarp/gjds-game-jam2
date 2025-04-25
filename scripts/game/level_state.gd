@@ -42,6 +42,7 @@ func _ready() -> void:
         buildings[building_id].push_back(-1)
       else:
         # ? Quite a bit of opportunity to clean this up later
+        # ! Need to assign room global position
         var room = Room.new(room_raw["room_id"] as int, room_raw["max_size"] as int)
         room.name = "room_" + str(room_raw["room_id"] as int)
         add_child(room)
