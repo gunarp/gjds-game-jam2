@@ -46,14 +46,24 @@ func _push_pos(pos: int, p: Passenger) -> void:
   add_child(p)
 
 
+func _log_push(pos: int) -> void:
+  # print(internal_array, " open_pos = ", pos)
+  pass
+
+
+func _log_pop(pos: int) -> void:
+  # print(internal_array, " pop_pos = ", pos)
+  pass
+
+
 func push_passenger(elevator_direction: Elevator.COMMAND, passenger: Passenger) -> void:
   var open_pos: int = _internal_search(_invert_direction(elevator_direction), _push_search_condition)
   if open_pos == -1:
-    print(internal_array, " open_pos = ", open_pos)
+    _log_push(open_pos)
     return
 
   _push_pos(open_pos, passenger)
-  print(internal_array, " open_pos = ", open_pos)
+  _log_push(open_pos)
 
 
 func _pop_search_condition(pname: String) -> bool:
@@ -95,15 +105,15 @@ func _shift(start: int, dir: Elevator.COMMAND) -> void:
 func pop_passenger(elevator_direction: Elevator.COMMAND) -> Passenger:
   var pop_pos: int = _internal_search(elevator_direction, _pop_search_condition)
   if pop_pos == -1:
-    print(internal_array, " pop_pos = ", pop_pos)
+    _log_pop(pop_pos)
     return null
 
   var passenger_node = _pop_pos(pop_pos)
-  print(internal_array, " pop_pos = ", pop_pos)
 
   # If we popped the head of the queue, we'd want to shift the rest of
   # the elements in the same direction we popped
   _shift(pop_pos, _invert_direction(elevator_direction))
+  _log_pop(pop_pos)
 
   return passenger_node
 

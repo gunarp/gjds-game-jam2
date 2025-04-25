@@ -50,14 +50,13 @@ func _ready() -> void:
         # need to pass dims into room, which will be used to space the passengers within it
         var room_dims = Vector2(0, 0)
 
-
         var room = Room.new(room_raw["room_id"] as int, room_raw["max_size"] as int, room_dims)
         room.name = "room_" + str(room_raw["room_id"] as int)
         add_child(room)
 
         var initial_passengers: Array[Passenger] = [] as Array[Passenger]
         for p_raw in room_raw["initial_passengers"]:
-          var p = Passenger.new(p_raw["dest_room"] as int, p_raw["sprite_style"] as int)
+          var p = Passenger.new_passenger(p_raw["dest_room"] as int, p_raw["sprite_style"] as int)
           p.name = "passenger_" + str(p.get_instance_id())
           initial_passengers.push_back(p)
 
@@ -71,7 +70,7 @@ func _ready() -> void:
   $ElevatorLeft.register_opened_handler(elevator_opened)
   $ElevatorRight.register_opened_handler(elevator_opened)
 
-  print(get_children())
+  # print(get_children())
 
 
 func _lookup_room_id(building_id: int, floor_id: int) -> int:

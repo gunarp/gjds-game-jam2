@@ -15,24 +15,33 @@ var translation_arr = [2, 1, 0, 5, 4, 3, 8, 7, 6]
 func _to_string() -> String:
   return "dest room: " + str(dest_id)
 
-func _init(dest_room: int, sprite_style: int):
-  print(dest_room)
-  print(sprite_style)
-  print("poggers passenger exists!")
-  dest_id = dest_room
 
-  var sprite_count = sprite_style * 9 + translation_arr[dest_room]
+const passenger_scene: PackedScene = preload("uid://o2weteelt0wc")
+static func new_passenger(dest_room: int, sprite_style: int) -> Passenger:
+  var passenger: Passenger = passenger_scene.instantiate()
+  passenger.dest_id = dest_room
+  passenger.style = sprite_style
+
+  return passenger
+
+
+func _ready() -> void:
+  var sprite_count = style * 9 + translation_arr[dest_id]
+  print(self.get_instance_id(), " ready children: ", get_children(true))
+  print()
   var sprite = get_node("Sprite")
   sprite.set_frame(sprite_count)
-  pass
+
 
 func change_dest(dest: Vector2):
   dest = dest
   # based on distance away, change speed
 
+
 func display_happy_bubble():
-  var bubble = get_node("Sprite")
+  var bubble = get_node("Happy")
   bubble.set_visible(true)
+
 
 func _process(_delta: float):
   # cancel tween, create a new one

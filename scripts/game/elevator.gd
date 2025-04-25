@@ -89,8 +89,8 @@ func _open_door(open_direction: COMMAND):
     if open_result != null:
       _push_passenger(open_result)
 
-    print("Elevator ", kind, " open_result = ", open_result)
-    print("=========")
+    # print("Elevator ", kind, " open_result = ", open_result)
+    # print("=========")
 
 
 func _process_inputs():
