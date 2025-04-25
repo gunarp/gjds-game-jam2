@@ -12,8 +12,10 @@ var happiness = 100
 # index of dest_floor = corresponding sprite frame
 var translation_arr = [2, 1, 0, 5, 4, 3, 8, 7, 6]
 
+
 func _to_string() -> String:
   return "dest room: " + str(dest_id)
+
 
 func _init(dest_room: int, sprite_style: int):
   print(dest_room)
@@ -25,12 +27,13 @@ func _init(dest_room: int, sprite_style: int):
   # TODO: generate Sprite2D for happy bubble
   pass
 
+
 func change_dest(dest: Vector2):
   dest = dest
   # based on distance away, change speed
 
 
-func _process(delta: float):
+func _process(_delta: float):
   # cancel tween, create a new one
 
   # proposed animation flow

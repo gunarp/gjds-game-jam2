@@ -2,84 +2,115 @@ extends Node2D
 
 class_name Elevator
 
-enum ELEVATOR_KIND {LEFT, RIGHT}
-enum ELEVATOR_COMMANDS {RIGHT, LEFT, UP, DOWN}
+enum KIND {LEFT, RIGHT}
+enum COMMAND {RIGHT, LEFT, UP, DOWN}
 
-@export var elevator_designation : ELEVATOR_KIND
+const min_height = 0
+@export var max_height: int = 0
+@export var kind : KIND
 var input_table : Dictionary = {
-  ELEVATOR_COMMANDS.RIGHT: "ELEVATOR_RIGHT",
-  ELEVATOR_COMMANDS.LEFT: "ELEVATOR_LEFT",
-  ELEVATOR_COMMANDS.UP: "ELEVATOR_UP",
-  ELEVATOR_COMMANDS.DOWN: "ELEVATOR_DOWN"
+  COMMAND.RIGHT: "ELEVATOR_RIGHT",
+  COMMAND.LEFT: "ELEVATOR_LEFT",
+  COMMAND.UP: "ELEVATOR_UP",
+  COMMAND.DOWN: "ELEVATOR_DOWN"
 }
 
-var left_rooms = [0, 1, 2] # what rooms are on the left
-var right_rooms = [4, 5, 6] # what rooms are on the right
-
 var current_floor: int = 0
-var dest_floor: int = 0
-var min_height = 0
-var max_height: int
-var elevator_num = elevator_designation
-var occupancy: Array[Passenger] = []
-var max_occupancy = 1
-var is_empty = 1 # may be a redundant flag? thought it may be useful for animations
 
+# For nearly all cases this will end up staying at one
+# ! This probably doesn't need to exist. Number of occupants
+# ! can be derived from the number of children nodes of type Passenger
+var num_occupants = 0
+var max_occupants = 1
+
+# TODO: Incorporate if implementing tweening
 enum STATE {IDLE, LOADING, MOVING}
 var state : STATE = STATE.IDLE
 
-signal left_door_opened(dest_floor)
-signal right_door_opened(dest_floor)
+
+#region temp
+var temp_passenger: Passenger
+#endregion
+
+func _init() -> void:
+  temp_passenger = Passenger.new()
+  temp_passenger.dest_id = 3
+  add_child(temp_passenger)
+  num_occupants += 1
+
 
 func _ready():
-  current_floor = 0
-  max_height = max(left_rooms.size(), right_rooms.size()) - 1
-
-  var input_prefix: String = "LEFT_" if elevator_designation == ELEVATOR_KIND.LEFT else "RIGHT_"
+  var input_prefix: String = "LEFT_" if kind == KIND.LEFT else "RIGHT_"
   for key in input_table:
     input_table[key] = input_prefix + input_table[key]
 
 
+var open_handler: Callable
+func register_opened_handler(handler: Callable):
+  open_handler = handler
+
+
+#region input handling
 func _increment_floor(inc: int):
-  # if states are tweened then we might need to think about this
+  # ? consider: if states are tweened then we might need to think about this
   # if state != STATE.IDLE:
   #   return
 
   # check if we can do anything
-  if (dest_floor == min_height and inc < 0) or (dest_floor == max_height and inc > 0):
-    print("Elevator ", elevator_designation, " cannot go ", "up" if inc > 0 else "down")
+  if (current_floor == min_height and inc < 0) or (current_floor == max_height and inc > 0):
+    # print("Elevator ", kind, " cannot go ", "up" if inc > 0 else "down")
     return
 
   # apply change to destination floor
-  dest_floor += inc
+  current_floor += inc
 
   # animate (negative y direction is up)
-  position.y = position.y + -1 * inc * ($TextureRect.texture.get_height() * global_scale.y)
+  position.y = position.y + -1 * inc * ($TextureRect.texture.get_size().y * scale.y)
 
 
-func _open_door(is_open_left: bool):
-  print("Elevator ", elevator_designation, " opening, ", "left" if is_open_left else "right")
+func _pop_passenger() -> Passenger:
+  if num_occupants == 0:
+    return null
+
+  var children = get_children()
+  for child in children:
+    if child is Passenger:
+      remove_child(child)
+      num_occupants -= 1
+      return child
+
+  return null
+
+
+func _open_door(open_direction: COMMAND):
   # TODO: Change state and load / unload elevator as appropriate
+  if open_handler.is_valid():
+    var occupant = _pop_passenger()
+
+    var open_result : Passenger = open_handler.call(kind, open_direction, current_floor, occupant)
+    if open_result != null:
+      # TODO: Think about how to render the child
+      add_child(open_result)
+      num_occupants += 1
+
+    print("Elevator ", kind, " open_result = ", open_result)
+    print("=========")
+
+
+func _process_inputs():
+  if Input.is_anything_pressed():
+    if Input.is_action_just_pressed(input_table[COMMAND.DOWN]):
+      _increment_floor(-1)
+    if Input.is_action_just_pressed(input_table[COMMAND.UP]):
+      _increment_floor(1)
+    if Input.is_action_just_pressed(input_table[COMMAND.LEFT]):
+      _open_door(COMMAND.LEFT)
+    if Input.is_action_just_pressed(input_table[COMMAND.RIGHT]):
+      _open_door(COMMAND.RIGHT)
+#endregion
 
 
 func _process(_delta: float):
-  if Input.is_anything_pressed():
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.DOWN]):
-      _increment_floor(-1)
+  _process_inputs()
 
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.UP]):
-      _increment_floor(1)
-
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.LEFT]):
-      _open_door(true)
-      # print("opening left door to room " + str(left_rooms[dest_floor]) + " on elevator " + str(elevator_designation))
-      # left_door_opened.emit(left_rooms[dest_floor])
-
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.RIGHT]):
-      _open_door(false)
-      # print("opening right door to room " + str(right_rooms[dest_floor]) + " on elevator " + str(elevator_designation))
-      # right_door_opened.emit(right_rooms[dest_floor])
-
-    # print("destination floor: %s" % str(dest_floor))
-
-  pass
+# TODO: Likely need a notification handler to accept a new child node
