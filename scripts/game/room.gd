@@ -12,12 +12,28 @@ var queue_ref: CoolQueue
 # so we don't have two processes writing to the same queue at once?
 enum STATE {IDLE, ADJUSTING}
 
+func _to_string() -> String:
+  return "room number: " + str(room_number) + ", " + str(get_child_count())
+
 # init function to set room_number?
-func _init(room_num: int):
+func _init(room_num: int, init_passengers: Array):
+  print(room_num)
+  print(init_passengers)
   room_number = room_num
+
   queue_ref = CoolQueue.new()
   add_child(queue_ref)
 
+  # !! divergence - cool queue is currently implemented to handle parenting of passenger nodes
+  # !! - peter
+  for i in range(init_passengers.size()):
+    # initialize and attach a passenger child (?)
+    # pass in int(init_passengers[i]["dest_room"]), int(init_passengers[i]["sprite_style"])
+    print("passing to Passenger dest %d" % int(init_passengers[i]["dest_room"]))
+    print("passing to Passenger style %d" % int(init_passengers[i]["sprite_style"]))
+    var test_passenger = Passenger.new(int(init_passengers[i]["dest_room"]), int(init_passengers[i]["sprite_style"]))
+    add_child(test_passenger)
+    
 
 func _ready():
   pass
