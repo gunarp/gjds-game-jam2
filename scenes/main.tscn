@@ -1,7 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4gmnfmha0w34"]
+[gd_scene load_steps=3 format=3 uid="uid://c4gmnfmha0w34"]
 
 [ext_resource type="PackedScene" uid="uid://bohsecfy8umiy" path="res://scenes/levels/level_1.tscn" id="1_o5qli"]
+[ext_resource type="AudioStream" uid="uid://b34w5yim6lcs8" path="res://resource/assets/sound/bossanova_2.mp3" id="2_0wfyh"]
 
 [node name="Main" type="Node"]
 
 [node name="Level1" parent="." instance=ExtResource("1_o5qli")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_0wfyh")
+volume_db = -1.56
+autoplay = true
+parameters/looping = true

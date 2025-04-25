@@ -1,16 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bohsecfy8umiy"]
+[gd_scene load_steps=7 format=3 uid="uid://bohsecfy8umiy"]
 
-[ext_resource type="Texture2D" uid="uid://bynq2f3dpi716" path="res://resource/assets/art/level_1.png" id="1_nsrm0"]
 [ext_resource type="Script" uid="uid://de6ogvo5ucgl8" path="res://scripts/game/level_state.gd" id="1_x42e6"]
-[ext_resource type="Resource" uid="uid://ce8ticml60k8b" path="res://resource/levels/level_1.tres" id="2_nsrm0"]
+[ext_resource type="Texture2D" uid="uid://puxxoyfc6edu" path="res://resource/assets/art/elevators_3.png" id="2_sk5k4"]
 [ext_resource type="PackedScene" uid="uid://vfhxw5n8bujt" path="res://scenes/game/elevator.tscn" id="4_x42e6"]
+[ext_resource type="Texture2D" uid="uid://dyivma2a2vdr6" path="res://resource/assets/art/char_1.png" id="5_oc4kc"]
+[ext_resource type="Texture2D" uid="uid://46ydo8i2kslm" path="res://resource/assets/art/char_3.png" id="6_s8va5"]
+[ext_resource type="Texture2D" uid="uid://f00d0x72y8dk" path="res://resource/assets/art/char_6.png" id="7_dga24"]
 
 [node name="Level1" type="Node2D"]
 physics_interpolation_mode = 2
 
 [node name="LevelState" type="Node" parent="."]
 script = ExtResource("1_x42e6")
-level_state = ExtResource("2_nsrm0")
 
 [node name="Node" type="Node" parent="."]
 physics_interpolation_mode = 2
@@ -25,16 +26,40 @@ position = Vector2(446, 446)
 position = Vector2(856, 444)
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = -1.0
+offset_right = 320.0
+offset_bottom = 179.0
 scale = Vector2(3.60065, 3.60776)
-texture = ExtResource("1_nsrm0")
+texture = ExtResource("2_sk5k4")
 
 [node name="ElevatorLeft" parent="." instance=ExtResource("4_x42e6")]
-position = Vector2(309, 440)
-scale = Vector2(3.24205, 3.85897)
+position = Vector2(312, 439)
+scale = Vector2(3.2753, 3.89851)
 
 [node name="ElevatorRight" parent="." instance=ExtResource("4_x42e6")]
-position = Vector2(719, 440)
-scale = Vector2(3.29756, 3.88375)
+position = Vector2(720, 439)
+scale = Vector2(3.25392, 3.89999)
 elevator_designation = 1
+
+[node name="Node2D" type="Node2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(374, 566)
+scale = Vector2(6.55043, 6.55043)
+texture = ExtResource("5_oc4kc")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node2D"]
+position = Vector2(489, 567)
+scale = Vector2(6.55043, 6.55043)
+texture = ExtResource("5_oc4kc")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Node2D"]
+position = Vector2(583, 564)
+scale = Vector2(6.55043, 6.55043)
+texture = ExtResource("6_s8va5")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Node2D"]
+position = Vector2(671, 564)
+scale = Vector2(6.55043, 6.55043)
+texture = ExtResource("7_dga24")

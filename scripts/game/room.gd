@@ -6,9 +6,10 @@ class_name Room
 @export var room_number: int
 var floor_number = 0 # not sure about this part yet.
 var queue: Array[Passenger] = []
+var cool_queue: CoolQueue
 var max_size = 10
 
-# may want a flag for when a room is being adjusted, 
+# may want a flag for when a room is being adjusted,
 # so we don't have two processes writing to the same queue at once?
 enum STATE {IDLE, ADJUSTING}
 
@@ -21,7 +22,7 @@ func _init(room_num: int):
 
 func _ready():
   pass
-  
+
 # not sure if this is relevant to maintaining room queue
 func _process(delta: float) -> void:
   pass
@@ -29,7 +30,7 @@ func _process(delta: float) -> void:
 # TODO: top of queue goes off into the elevator
 func release_passenger() -> void: #maybe a type of Passenger?
   pass
-  
+
 # TODO: gain from elevator and put into back of queue
 func gain_passenger():
   pass
@@ -43,7 +44,7 @@ func is_complete(passenger: int) -> void:
 func _on_elevator_left_door_opened(dest_floor: int) -> void:
   print("room noticed elevator left door opened!")
   if dest_floor == room_number:
-    print("yay! time to move people around in room %s" % str(room_number)) 
+    print("yay! time to move people around in room %s" % str(room_number))
   else:
     print("ignorning elevator calls")
 
