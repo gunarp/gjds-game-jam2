@@ -28,16 +28,11 @@ func _process(_delta: float) -> void:
   pass
 
 
-# TODO: top of queue goes off into the elevator
 func pop_passenger(direction: Elevator.COMMAND) -> Passenger:
   return queue_ref.pop_passenger(direction)
 
 
-# TODO: gain from elevator and put into back of queue
 func push_passenger(direction: Elevator.COMMAND, passenger: Passenger) -> void:
-  # When passenger arrives, check destination of passenger
-  # if passenger desitnation is this room, set passenger to arrived
-  # and send a signal out to level_state that an arrival happened
   if passenger.dest_id == room_number:
     passenger.arrived = true
     passenger_arrived_at_destination.emit()

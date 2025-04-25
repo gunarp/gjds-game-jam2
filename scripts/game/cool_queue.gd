@@ -16,7 +16,8 @@ func _ready() -> void:
   pass
 
 
-# returns first position travelling from the incoming direction
+# returns first position travelling from the
+# incoming direction which satisfies condition
 func _internal_search(incoming_direction: Elevator.COMMAND, condition: Callable) -> int:
   var positions = internal_array.keys()
   if (incoming_direction == Elevator.COMMAND.RIGHT):

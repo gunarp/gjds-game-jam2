@@ -26,6 +26,13 @@ enum STATE {IDLE, LOADING, MOVING}
 var state : STATE = STATE.IDLE
 
 
+#region temp
+var temp_passenger: Passenger
+#endregion
+
+func _init() -> void:
+  pass
+
 func _ready():
   var input_prefix: String = "LEFT_" if kind == KIND.LEFT else "RIGHT_"
   for key in input_table:
