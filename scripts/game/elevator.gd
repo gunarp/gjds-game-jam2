@@ -17,10 +17,10 @@ var input_table : Dictionary = {
 
 var current_floor: int = 0
 
+const closed_door_texture = preload("uid://b7lp0m626b0wo") as CompressedTexture2D
+const open_door_texture = preload("uid://d25nyvwsybslm") as CompressedTexture2D
+
 # For nearly all cases this will end up staying at one
-# ! This probably doesn't need to exist. Number of occupants
-# ! can be derived from the number of children nodes of type Passenger
-var num_occupants = 0
 var max_occupants = 1
 
 var queue_ref: CoolQueue
@@ -29,10 +29,6 @@ var queue_ref: CoolQueue
 enum STATE {IDLE, LOADING, MOVING}
 var state : STATE = STATE.IDLE
 
-
-#region temp
-var temp_passenger: Passenger
-#endregion
 
 func _init() -> void:
   queue_ref = CoolQueue.new(1)
@@ -43,10 +39,6 @@ func _ready():
   var input_prefix: String = "LEFT_" if kind == KIND.LEFT else "RIGHT_"
   for key in input_table:
     input_table[key] = input_prefix + input_table[key]
-
-  # temp_passenger = Passenger.new(4, 0)
-  # temp_passenger.name = input_prefix + "temp_passenger"
-  # queue_ref.push_passenger(COMMAND.LEFT, temp_passenger)
 
 
 var open_handler: Callable
@@ -62,7 +54,6 @@ func _increment_floor(inc: int):
 
   # check if we can do anything
   if (current_floor == min_height and inc < 0) or (current_floor == max_height and inc > 0):
-    # print("Elevator ", kind, " cannot go ", "up" if inc > 0 else "down")
     return
 
   # apply change to destination floor
@@ -86,13 +77,21 @@ func _open_door(open_direction: COMMAND):
   # TODO: state change considerations
   if open_handler.is_valid():
     var occupant = _pop_passenger()
+    if occupant != null:
+      $Ding.play()
 
     var open_result : Passenger = open_handler.call(kind, open_direction, current_floor, occupant)
     if open_result != null:
       _push_passenger(open_result)
+      $Ding.play()
 
     # print("Elevator ", kind, " open_result = ", open_result)
     # print("=========")
+
+    if queue_ref.is_full():
+      $TextureRect.texture = open_door_texture
+    else:
+      $TextureRect.texture = closed_door_texture
 
 
 func _process_inputs():

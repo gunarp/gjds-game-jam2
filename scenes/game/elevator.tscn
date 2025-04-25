@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://vfhxw5n8bujt"]
+[gd_scene load_steps=4 format=3 uid="uid://vfhxw5n8bujt"]
 
 [ext_resource type="Script" uid="uid://c6s2g3n7pv75c" path="res://scripts/game/elevator.gd" id="1_j2jxn"]
-[ext_resource type="Texture2D" uid="uid://d25nyvwsybslm" path="res://resource/assets/art/elevator_open.png" id="2_ycujj"]
+[ext_resource type="Texture2D" uid="uid://b7lp0m626b0wo" path="res://resource/assets/art/elevator_closed.png" id="2_gqe4v"]
+[ext_resource type="AudioStream" uid="uid://bs55jj08gfmuh" path="res://resource/assets/sound/ding_sfx_2.mp3" id="3_gqe4v"]
 
 [node name="Elevator" type="Node2D"]
 script = ExtResource("1_j2jxn")
@@ -9,5 +10,8 @@ script = ExtResource("1_j2jxn")
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 35.0
 offset_bottom = 50.0
-texture = ExtResource("2_ycujj")
+texture = ExtResource("2_gqe4v")
 stretch_mode = 2
+
+[node name="Ding" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gqe4v")
