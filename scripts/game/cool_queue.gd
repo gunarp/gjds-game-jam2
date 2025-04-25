@@ -23,9 +23,12 @@ func _invert_direction(direction: Elevator.COMMAND) -> Elevator.COMMAND:
 
 # returns first position travelling from the
 # incoming direction which satisfies condition
-func _internal_search(incoming_direction: Elevator.COMMAND, condition: Callable) -> int:
+# @param search_direction - order in which the searching wil traverse the positions
+# searching left means starting at the right, and going left
+# searching right means starting at the left, and going right
+func _internal_search(search_direction: Elevator.COMMAND, condition: Callable) -> int:
   var positions = internal_array.keys()
-  if (incoming_direction == Elevator.COMMAND.RIGHT):
+  if (search_direction == Elevator.COMMAND.LEFT):
     positions.reverse()
 
   var ret_pos: int = -1
@@ -46,8 +49,8 @@ func _push_pos(pos: int, p: Passenger) -> void:
   add_child(p)
 
 
-func push_passenger(incoming_direction: Elevator.COMMAND, passenger: Passenger) -> void:
-  var open_pos: int = _internal_search(_invert_direction(incoming_direction), _push_search_condition)
+func push_passenger(elevator_direction: Elevator.COMMAND, passenger: Passenger) -> void:
+  var open_pos: int = _internal_search(_invert_direction(elevator_direction), _push_search_condition)
   if open_pos == -1:
     print(internal_array, " open_pos = ", open_pos)
     return
@@ -72,14 +75,39 @@ func _pop_pos(pos: int) -> Passenger:
 
   return pnode
 
-func pop_passenger(incoming_direction: Elevator.COMMAND) -> Passenger:
-  var pop_pos: int = _internal_search(incoming_direction, _pop_search_condition)
+
+# shift elements of internal array by one to the left or right, starting at start
+# the value at start is overwritten in this process
+func _shift(start: int, dir: Elevator.COMMAND) -> void:
+  if dir == Elevator.COMMAND.LEFT:
+    var modified: bool = false
+    for i in range(start, internal_array.size() - 1):
+      modified = true
+      internal_array[i] = internal_array[i+1]
+    if modified:
+      internal_array[internal_array.size() - 1] = ""
+  else:
+    var modified: bool = false
+    for i in range(start, 0, -1):
+      modified = true
+      internal_array[i] = internal_array[i-1]
+    if modified:
+      internal_array[0] = ""
+
+
+func pop_passenger(elevator_direction: Elevator.COMMAND) -> Passenger:
+  var pop_pos: int = _internal_search(elevator_direction, _pop_search_condition)
   if pop_pos == -1:
     print(internal_array, " pop_pos = ", pop_pos)
     return null
 
   var passenger_node = _pop_pos(pop_pos)
   print(internal_array, " pop_pos = ", pop_pos)
+
+  # If we popped the head of the queue, we'd want to shift the rest of
+  # the elements in the same direction we popped
+  _shift(pop_pos, _invert_direction(elevator_direction))
+
   return passenger_node
 
 

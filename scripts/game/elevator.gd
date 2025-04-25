@@ -33,7 +33,7 @@ var temp_passenger: Passenger
 #endregion
 
 func _init() -> void:
-  temp_passenger = Passenger.new(3, 0)
+  temp_passenger = Passenger.new(4, 0)
   add_child(temp_passenger)
   num_occupants += 1
 
@@ -81,16 +81,20 @@ func _pop_passenger() -> Passenger:
   return null
 
 
+func _push_passenger(p: Passenger) -> void:
+  add_child(p)
+  # p.show()
+  num_occupants += 1
+
+
 func _open_door(open_direction: COMMAND):
-  # TODO: Change state and load / unload elevator as appropriate
+  # TODO: state change considerations
   if open_handler.is_valid():
     var occupant = _pop_passenger()
 
     var open_result : Passenger = open_handler.call(kind, open_direction, current_floor, occupant)
     if open_result != null:
-      # TODO: Think about how to render the child
-      add_child(open_result)
-      num_occupants += 1
+      _push_passenger(open_result)
 
     print("Elevator ", kind, " open_result = ", open_result)
     print("=========")

@@ -45,7 +45,9 @@ func _process(_delta: float) -> void:
 
 
 func pop_passenger(direction: Elevator.COMMAND) -> Passenger:
-  return queue_ref.pop_passenger(direction)
+  var popped = queue_ref.pop_passenger(direction)
+  # popped.hide()
+  return popped
 
 
 func push_passenger(direction: Elevator.COMMAND, passenger: Passenger) -> void:
@@ -54,6 +56,7 @@ func push_passenger(direction: Elevator.COMMAND, passenger: Passenger) -> void:
     passenger_arrived_at_destination.emit()
 
   queue_ref.push_passenger(direction, passenger)
+  # passenger.show()
 
 
 func is_full() -> bool:
