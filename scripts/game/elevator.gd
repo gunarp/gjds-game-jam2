@@ -94,8 +94,7 @@ func _open_door(open_direction: COMMAND):
       num_occupants += 1
 
     print("Elevator ", kind, " open_result = ", open_result)
-    print()
-    # print(get_children())
+    print("=========")
 
 
 func _process_inputs():

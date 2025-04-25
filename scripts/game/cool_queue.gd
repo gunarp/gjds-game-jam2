@@ -30,7 +30,6 @@ func _internal_search(incoming_direction: Elevator.COMMAND, condition: Callable)
 
   var ret_pos: int = -1
   for pos in positions:
-    print(pos)
     if condition.call(internal_array[pos]):
       ret_pos = pos
       break
