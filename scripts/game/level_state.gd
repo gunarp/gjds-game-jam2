@@ -21,6 +21,13 @@ extends Node
 #   }
 # }
 
+func _init() -> void:
+  # ! Temporary room creation - remove later
+  for i in range(0, 10):
+    var room = Room.new(i)
+    room.name = "room_" + str(i)
+    add_child(room)
+
 
 # on load, read in the intial_level_state (export initlization will happen before)
 func _ready() -> void:
@@ -54,7 +61,8 @@ func _lookup_room_id(building_id: int, floor_id: int) -> int:
 # ! function operates on assumption that rooms are named
 # ! room_x, where x is the room id
 func _get_room_by_id(room_id: int) -> Room:
-  return self.find_child("room_" + str(room_id), false)
+  # * children created dynamically are not "owned" by this node
+  return self.find_child("room_" + str(room_id), false, false)
 
 
 # TODO: flesh this out later if implementing a more complicated map
@@ -65,6 +73,7 @@ func _can_room_be_opened_from_side(_room_id: int, _direction: Elevator.COMMAND) 
 func elevator_opened(elevator_kind: Elevator.KIND,  direction: Elevator.COMMAND, floor_number: int, passenger: Passenger) -> Passenger:
   print("Elevator ", elevator_kind,
         " opening ", "left" if direction == Elevator.COMMAND.LEFT else "right",
+        " on floor ", floor_number,
         " passenger ", passenger)
 
   # provide floor they're on, and if they're holding any passengers, what direction they're opening the door

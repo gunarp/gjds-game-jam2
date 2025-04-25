@@ -18,6 +18,8 @@ var input_table : Dictionary = {
 var current_floor: int = 0
 
 # For nearly all cases this will end up staying at one
+# ! This probably doesn't need to exist. Number of occupants
+# ! can be derived from the number of children nodes of type Passenger
 var num_occupants = 0
 var max_occupants = 1
 
@@ -31,7 +33,11 @@ var temp_passenger: Passenger
 #endregion
 
 func _init() -> void:
-  pass
+  temp_passenger = Passenger.new()
+  temp_passenger.dest_id = 3
+  add_child(temp_passenger)
+  num_occupants += 1
+
 
 func _ready():
   var input_prefix: String = "LEFT_" if kind == KIND.LEFT else "RIGHT_"
@@ -52,7 +58,7 @@ func _increment_floor(inc: int):
 
   # check if we can do anything
   if (current_floor == min_height and inc < 0) or (current_floor == max_height and inc > 0):
-    print("Elevator ", kind, " cannot go ", "up" if inc > 0 else "down")
+    # print("Elevator ", kind, " cannot go ", "up" if inc > 0 else "down")
     return
 
   # apply change to destination floor
@@ -77,21 +83,19 @@ func _pop_passenger() -> Passenger:
 
 
 func _open_door(open_direction: COMMAND):
-  # print("Elevator ", kind, " opening, ", "left" if is_open_left else "right")
   # TODO: Change state and load / unload elevator as appropriate
   if open_handler.is_valid():
-    # feels kinda like an antipattern... it's weird behavior that
-    # the parenting is done by us if we have a new passenger,
-    # but that unparenting is handled by the callee
-    # pop the passenger from our tree, then pass into callee
     var occupant = _pop_passenger()
 
     var open_result : Passenger = open_handler.call(kind, open_direction, current_floor, occupant)
-    # print(open_result)
     if open_result != null:
       # TODO: Think about how to render the child
       add_child(open_result)
       num_occupants += 1
+
+    print("Elevator ", kind, " open_result = ", open_result)
+    print()
+    # print(get_children())
 
 
 func _process_inputs():

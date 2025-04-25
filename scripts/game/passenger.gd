@@ -9,8 +9,8 @@ var arrived: bool = false
 
 var happiness = 100
 
-func _to_string() -> String:
-  return str(dest_id)
+# func _to_string() -> String:
+#   return str(dest_id)
 
 
 func change_dest(dest: Vector2):
@@ -18,7 +18,7 @@ func change_dest(dest: Vector2):
   # based on distance away, change speed
 
 
-func _process(delta: float):
+func _process(_delta: float):
   # cancel tween, create a new one
 
   # proposed animation flow
