@@ -44,9 +44,9 @@ func _ready():
   for key in input_table:
     input_table[key] = input_prefix + input_table[key]
 
-  temp_passenger = Passenger.new(4, 0)
-  temp_passenger.name = input_prefix + "temp_passenger"
-  queue_ref.push_passenger(COMMAND.LEFT, temp_passenger)
+  # temp_passenger = Passenger.new(4, 0)
+  # temp_passenger.name = input_prefix + "temp_passenger"
+  # queue_ref.push_passenger(COMMAND.LEFT, temp_passenger)
 
 
 var open_handler: Callable

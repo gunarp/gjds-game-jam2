@@ -10,6 +10,7 @@
 [node name="Level1" type="Node2D"]
 physics_interpolation_mode = 2
 script = ExtResource("1_x42e6")
+initial_level_json = "res://resource/levels/level_1.json"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_top = -1.0
@@ -30,6 +31,7 @@ max_height = 2
 kind = 1
 
 [node name="Node2D" type="Node2D" parent="."]
+visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 position = Vector2(258, 564)

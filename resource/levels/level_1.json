@@ -2,6 +2,7 @@
 	"building_0": {
 		"floor_0": {
 			"room_id": 0,
+			"max_size": 3,
 			"initial_passengers": [
 				{
 					"dest_room": 1,
@@ -15,11 +16,13 @@
 		},
 		"floor_1": {
 			"room_id": 1,
+			"max_size": 3,
 			"initial_passengers": [
 			]
 		},
 		"floor_2": {
 			"room_id": 2,
+			"max_size": 3,
 			"initial_passengers": [
 				{
 					"dest_room": 8,
@@ -35,11 +38,13 @@
 	"building_1": {
 		"floor_0": {
 			"room_id": 3,
+			"max_size": 3,
 			"initial_passengers": [
 			]
 		},
 		"floor_1": {
 			"room_id": 4,
+			"max_size": 3,
 			"initial_passengers": [
 				{
 					"dest_room": 0,
@@ -49,6 +54,7 @@
 		},
 		"floor_2": {
 			"room_id": 5,
+			"max_size": 3,
 			"initial_passengers": [
 			]
 		}
@@ -56,11 +62,13 @@
 	"building_2": {
 		"floor_0": {
 			"room_id": 6,
+			"max_size": 3,
 			"initial_passengers": [
 			]
 		},
 		"floor_1": {
 			"room_id": 7,
+			"max_size": 3,
 			"initial_passengers": [
 				{
 					"dest_room": 3,
@@ -74,6 +82,7 @@
 		},
 		"floor_2": {
 			"room_id": 8,
+			"max_size": 3,
 			"initial_passengers": [
 				{
 					"dest_room": 2,

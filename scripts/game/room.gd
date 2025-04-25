@@ -4,8 +4,7 @@ class_name Room
 
 signal passenger_arrived_at_destination
 
-# TODO: turn room_number into @onready ? or @export ??
-@export var room_number: int
+var room_number: int
 var queue_ref: CoolQueue
 
 # may want a flag for when a room is being adjusted,
@@ -15,24 +14,12 @@ enum STATE {IDLE, ADJUSTING}
 func _to_string() -> String:
   return "room number: " + str(room_number) + ", " + str(get_child_count())
 
-# init function to set room_number?
-func _init(room_num: int, init_passengers: Array):
-  print(room_num)
-  print(init_passengers)
+
+func _init(room_num: int, max_size: int):
   room_number = room_num
 
-  queue_ref = CoolQueue.new(3)
+  queue_ref = CoolQueue.new(max_size)
   add_child(queue_ref)
-
-  # # !! divergence - cool queue is currently implemented to handle parenting of passenger nodes
-  # # !! - peter
-  # for i in range(init_passengers.size()):
-  #   # initialize and attach a passenger child (?)
-  #   # pass in int(init_passengers[i]["dest_room"]), int(init_passengers[i]["sprite_style"])
-  #   print("passing to Passenger dest %d" % int(init_passengers[i]["dest_room"]))
-  #   print("passing to Passenger style %d" % int(init_passengers[i]["sprite_style"]))
-  #   var test_passenger = Passenger.new(int(init_passengers[i]["dest_room"]), int(init_passengers[i]["sprite_style"]))
-  #   add_child(test_passenger)
 
 
 func _ready():
@@ -67,9 +54,3 @@ func _assign_passenger_positions() -> void:
 
 func is_full() -> bool:
   return queue_ref.is_full()
-
-# # checks if the newly arrived person is in the correct room
-# # if yes, the person is smote (popped out of the queue (and thus existence))
-# # not sure if this is the right location for this function
-# func is_complete(passenger: int) -> void:
-#   pass
