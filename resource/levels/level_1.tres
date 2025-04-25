@@ -1,0 +1,112 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=22 format=3 uid="uid://ce8ticml60k8b"]
+
+[ext_resource type="Script" uid="uid://dy2hcpxq84lej" path="res://resource/levels/serialized_building.gd" id="1_ysavn"]
+[ext_resource type="Script" uid="uid://bwjikpjcoc5di" path="res://resource/levels/level_data.gd" id="2_8rktw"]
+[ext_resource type="Script" uid="uid://c270orf2dreww" path="res://resource/levels/serialized_room.gd" id="2_wk8b6"]
+[ext_resource type="Script" uid="uid://bq4eontb3vu1v" path="res://resource/levels/serliazed_passenger.gd" id="3_ci200"]
+[ext_resource type="Texture2D" uid="uid://bynq2f3dpi716" path="res://resource/assets/art/level_1.png" id="3_cpvnc"]
+[ext_resource type="Texture2D" uid="uid://c4n5paexjayxk" path="res://resource/temp_assets/icon1.png" id="4_dyoow"]
+[ext_resource type="Texture2D" uid="uid://bxmdam7lqmsxm" path="res://resource/temp_assets/icon2.png" id="5_rtx0v"]
+
+[sub_resource type="Resource" id="Resource_ci200"]
+script = ExtResource("2_wk8b6")
+room_id = 0
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_pqrk7"]
+script = ExtResource("3_ci200")
+visual = ExtResource("4_dyoow")
+dest_room_id = 1
+metadata/_custom_type_script = "uid://bq4eontb3vu1v"
+
+[sub_resource type="Resource" id="Resource_5yo5w"]
+script = ExtResource("3_ci200")
+visual = ExtResource("5_rtx0v")
+dest_room_id = 2
+metadata/_custom_type_script = "uid://bq4eontb3vu1v"
+
+[sub_resource type="Resource" id="Resource_dyoow"]
+script = ExtResource("2_wk8b6")
+room_id = 1
+passengers = Array[ExtResource("3_ci200")]([SubResource("Resource_pqrk7"), SubResource("Resource_5yo5w")])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_rtx0v"]
+script = ExtResource("2_wk8b6")
+room_id = 2
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_fkikd"]
+script = ExtResource("1_ysavn")
+rooms = Dictionary[int, ExtResource("2_wk8b6")]({
+0: SubResource("Resource_ci200"),
+1: SubResource("Resource_dyoow"),
+2: SubResource("Resource_rtx0v")
+})
+metadata/_custom_type_script = "uid://dy2hcpxq84lej"
+
+[sub_resource type="Resource" id="Resource_7fx5i"]
+script = ExtResource("2_wk8b6")
+room_id = 3
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_w2ai2"]
+script = ExtResource("2_wk8b6")
+room_id = 4
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_dytda"]
+script = ExtResource("2_wk8b6")
+room_id = 5
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_pfkvb"]
+script = ExtResource("1_ysavn")
+rooms = Dictionary[int, ExtResource("2_wk8b6")]({
+0: SubResource("Resource_7fx5i"),
+1: SubResource("Resource_w2ai2"),
+2: SubResource("Resource_dytda")
+})
+metadata/_custom_type_script = "uid://dy2hcpxq84lej"
+
+[sub_resource type="Resource" id="Resource_v4w12"]
+script = ExtResource("2_wk8b6")
+room_id = 6
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_4vkfo"]
+script = ExtResource("2_wk8b6")
+room_id = 7
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_foq1o"]
+script = ExtResource("2_wk8b6")
+room_id = 8
+passengers = Array[ExtResource("3_ci200")]([])
+metadata/_custom_type_script = "uid://c270orf2dreww"
+
+[sub_resource type="Resource" id="Resource_a0ykh"]
+script = ExtResource("1_ysavn")
+rooms = Dictionary[int, ExtResource("2_wk8b6")]({
+0: SubResource("Resource_v4w12"),
+1: SubResource("Resource_4vkfo"),
+2: SubResource("Resource_foq1o")
+})
+metadata/_custom_type_script = "uid://dy2hcpxq84lej"
+
+[resource]
+script = ExtResource("2_8rktw")
+level_visual = ExtResource("3_cpvnc")
+buildings = Dictionary[int, ExtResource("1_ysavn")]({
+0: SubResource("Resource_fkikd"),
+1: SubResource("Resource_pfkvb"),
+2: SubResource("Resource_a0ykh")
+})
+metadata/_custom_type_script = "uid://bwjikpjcoc5di"
