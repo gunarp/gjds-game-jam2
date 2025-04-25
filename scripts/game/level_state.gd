@@ -29,13 +29,27 @@ func _ready() -> void:
   var json_as_text = FileAccess.get_file_as_string(file)
   var json_as_dict = JSON.parse_string(json_as_text)
   if json_as_dict:
-      print(json_as_dict)
+      # print(json_as_dict)
+      pass
+  
+  for building in json_as_dict:
+    # print(json_as_dict[building])
+    for floor in json_as_dict[building]:
+      print(json_as_dict[building][floor])
+      
+      # create room with int(json_as_dict[building][floor]["room_id"]), json_as_dict[building][floor]["initial_passengers"]
+      print(int(json_as_dict[building][floor]["room_id"]))
+      print(json_as_dict[building][floor]["initial_passengers"])
+      var room_gen = Room.new(int(json_as_dict[building][floor]["room_id"]), json_as_dict[building][floor]["initial_passengers"])
+      add_child(room_gen)
+      print("\n\n")
       
   # populate rooms based on serialized data
   #   - need a way to figure out where the rooms are in the map
   # print(level_state.buildings[0].rooms[0])
 
   # should also register callbacks with elevator
+  print(get_children())
   pass
 
 
