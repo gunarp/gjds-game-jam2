@@ -42,10 +42,9 @@ scale = Vector2(3.25392, 3.89999)
 elevator_designation = 1
 
 [node name="Node2D" type="Node2D" parent="."]
-visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-position = Vector2(374, 566)
+position = Vector2(258, 564)
 scale = Vector2(6.55043, 6.55043)
 texture = ExtResource("5_oc4kc")
 
@@ -55,7 +54,7 @@ scale = Vector2(6.55043, 6.55043)
 texture = ExtResource("5_oc4kc")
 
 [node name="Sprite2D3" type="Sprite2D" parent="Node2D"]
-position = Vector2(583, 564)
+position = Vector2(171, 370)
 scale = Vector2(6.55043, 6.55043)
 texture = ExtResource("6_s8va5")
 

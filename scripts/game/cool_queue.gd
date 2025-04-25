@@ -27,6 +27,10 @@ func is_full() -> bool:
   return true
 
 
+func get_size() -> int:
+  return internal_array.size()
+
+
 # Called to render the room state (passengers inside the room)
 func get_passengers() -> Dictionary[int, Passenger]:
   return internal_array.duplicate()
