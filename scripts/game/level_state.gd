@@ -21,7 +21,7 @@ class_name LevelState
 # * Maps Building identifier to list of rooms in building
 # * The index of the list is the floor the room is located on
 # * If there is no room on that floor, the room id will be -1
-var buildings: Dictionary[String, Array]
+var buildings: Array[Array]
 
 
 func _init() -> void:
@@ -33,17 +33,25 @@ func _ready() -> void:
   var json_as_text = FileAccess.get_file_as_string(initial_level_json)
   var json_as_dict = JSON.parse_string(json_as_text)
 
-  for building_id in json_as_dict:
-    buildings[building_id] = []
+  for building in json_as_dict["buildings"]:
+    var building_rooms = []
 
-    for floor_num in json_as_dict[building_id]:
-      var room_raw = json_as_dict[building_id][floor_num]
+    for floor_num in building:
+      var room_raw = building[floor_num]
       if room_raw["room_id"] as int < 0:
-        buildings[building_id].push_back(-1)
+        building_rooms.push_back(-1)
       else:
         # ? Quite a bit of opportunity to clean this up later
         # ! Need to assign room global position
-        var room = Room.new(room_raw["room_id"] as int, room_raw["max_size"] as int)
+
+        # Room anchor point will be top left of room
+        # max_y - floor_margin - n_room * (room_height - 1)
+
+        # need to pass dims into room, which will be used to space the passengers within it
+        var room_dims = Vector2(0, 0)
+
+
+        var room = Room.new(room_raw["room_id"] as int, room_raw["max_size"] as int, room_dims)
         room.name = "room_" + str(room_raw["room_id"] as int)
         add_child(room)
 
@@ -56,7 +64,9 @@ func _ready() -> void:
         for p in initial_passengers:
           room.push_passenger(Elevator.COMMAND.RIGHT, p)
 
-        buildings[building_id].push_back(room_raw["room_id"] as int)
+        building_rooms.push_back(room_raw["room_id"] as int)
+
+      buildings.push_back(building_rooms)
 
   $ElevatorLeft.register_opened_handler(elevator_opened)
   $ElevatorRight.register_opened_handler(elevator_opened)
@@ -64,7 +74,7 @@ func _ready() -> void:
   print(get_children())
 
 
-func _lookup_room_id(building_id: String, floor_id: int) -> int:
+func _lookup_room_id(building_id: int, floor_id: int) -> int:
   return buildings[building_id][floor_id]
 
 
@@ -95,17 +105,17 @@ func elevator_opened(elevator_kind: Elevator.KIND, direction: Elevator.COMMAND, 
   var room_ref: Room = null
   if elevator_kind == Elevator.KIND.LEFT:
     if direction == Elevator.COMMAND.LEFT:
-      room_ref = _get_room_by_id(_lookup_room_id("building_0", floor_number))
+      room_ref = _get_room_by_id(_lookup_room_id(0, floor_number))
       pass
     else:
-      room_ref = _get_room_by_id(_lookup_room_id("building_1", floor_number))
+      room_ref = _get_room_by_id(_lookup_room_id(1, floor_number))
       pass
   else:
     if direction == Elevator.COMMAND.LEFT:
-      room_ref = _get_room_by_id(_lookup_room_id("building_1", floor_number))
+      room_ref = _get_room_by_id(_lookup_room_id(1, floor_number))
       pass
     else:
-      room_ref = _get_room_by_id(_lookup_room_id("building_2", floor_number))
+      room_ref = _get_room_by_id(_lookup_room_id(2, floor_number))
       pass
 
   # if there's nothing to do, return the same passenger

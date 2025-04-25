@@ -6,6 +6,7 @@ signal passenger_arrived_at_destination
 
 var room_number: int
 var queue_ref: CoolQueue
+var dims: Vector2
 
 # may want a flag for when a room is being adjusted,
 # so we don't have two processes writing to the same queue at once?
@@ -15,8 +16,9 @@ func _to_string() -> String:
   return "room number: " + str(room_number) + ", " + str(get_child_count())
 
 
-func _init(room_num: int, max_size: int):
+func _init(room_num: int, max_size: int, _dims: Vector2):
   room_number = room_num
+  dims = _dims
 
   queue_ref = CoolQueue.new(max_size)
   add_child(queue_ref)

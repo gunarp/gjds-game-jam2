@@ -69,7 +69,7 @@ func _increment_floor(inc: int):
   current_floor += inc
 
   # animate (negative y direction is up)
-  position.y = position.y + -1 * inc * ($TextureRect.texture.get_size().y * scale.y)
+  position.y = position.y + -1 * inc * ($TextureRect.texture.get_size().y)
 
 
 func _pop_passenger() -> Passenger:
