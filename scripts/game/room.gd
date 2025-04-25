@@ -51,6 +51,7 @@ func pop_passenger(direction: Elevator.COMMAND) -> Passenger:
 
 func push_passenger(direction: Elevator.COMMAND, passenger: Passenger) -> void:
   if passenger.dest_id == room_number:
+    passenger.display_happy_bubble()
     passenger.arrived = true
     passenger_arrived_at_destination.emit()
 
