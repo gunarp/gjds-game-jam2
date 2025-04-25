@@ -33,8 +33,7 @@ var temp_passenger: Passenger
 #endregion
 
 func _init() -> void:
-  temp_passenger = Passenger.new()
-  temp_passenger.dest_id = 3
+  temp_passenger = Passenger.new(3, 0)
   add_child(temp_passenger)
   num_occupants += 1
 
