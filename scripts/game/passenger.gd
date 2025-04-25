@@ -21,16 +21,21 @@ static func new_passenger(dest_room: int, sprite_style: int) -> Passenger:
   var passenger: Passenger = passenger_scene.instantiate()
   passenger.dest_id = dest_room
   passenger.style = sprite_style
+  passenger.name = "passenger_" + str(passenger.get_instance_id())
 
   return passenger
 
 
 func _ready() -> void:
   var sprite_count = style * 9 + translation_arr[dest_id]
-  print(self.get_instance_id(), " ready children: ", get_children(true))
-  print()
+  # print(self.get_instance_id(), " ready children: ", get_children(true))
+  # print()
   var sprite = get_node("Sprite")
   sprite.set_frame(sprite_count)
+
+
+func get_y_offset() -> float:
+  return $Sprite.get_rect().size.y / 2.0
 
 
 func change_dest(dest: Vector2):

@@ -1,5 +1,7 @@
 {
 	"visual_data": {
+		"max_x": 320,
+		"max_y": 180,
 		"side_margin": 9,
 		"floor_margin": 4,
 		"room_width": 78,

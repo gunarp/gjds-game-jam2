@@ -78,6 +78,8 @@ func _pop_passenger() -> Passenger:
 
 func _push_passenger(p: Passenger) -> void:
   queue_ref.push_passenger(COMMAND.LEFT, p)
+  p.z_index = self.z_index + 1
+  p.position.x = $TextureRect.texture.get_size().x / 2.0
 
 
 func _open_door(open_direction: COMMAND):

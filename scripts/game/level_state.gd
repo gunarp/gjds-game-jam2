@@ -33,31 +33,34 @@ func _ready() -> void:
   var json_as_text = FileAccess.get_file_as_string(initial_level_json)
   var json_as_dict = JSON.parse_string(json_as_text)
 
+  var max_y = json_as_dict["visual_data"]["max_y"] as int
+  var side_margin = json_as_dict["visual_data"]["side_margin"] as int
+  var floor_margin = json_as_dict["visual_data"]["floor_margin"] as int
+  var elevator_width = json_as_dict["visual_data"]["elevator_width"] as int
+  var room_dims = Vector2(json_as_dict["visual_data"]["room_width"] as int, json_as_dict["visual_data"]["room_height"] as int)
+
   for building in json_as_dict["buildings"]:
     var building_rooms = []
 
-    for floor_num in building:
-      var room_raw = building[floor_num]
+    for floor_id in building:
+      var room_raw = building[floor_id]
       if room_raw["room_id"] as int < 0:
         building_rooms.push_back(-1)
       else:
         # ? Quite a bit of opportunity to clean this up later
-        # ! Need to assign room global position
 
-        # Room anchor point will be top left of room
-        # max_y - floor_margin - n_room * (room_height - 1)
-
-        # need to pass dims into room, which will be used to space the passengers within it
-        var room_dims = Vector2(0, 0)
 
         var room = Room.new(room_raw["room_id"] as int, room_raw["max_size"] as int, room_dims)
-        room.name = "room_" + str(room_raw["room_id"] as int)
+
+        # Position is set to top left corner of room
+        room.position.x = side_margin + (buildings.size() * (room_dims.x + elevator_width))
+        room.position.y = max_y - floor_margin - ((building_rooms.size() + 1) * room_dims.y) - 1
+
         add_child(room)
 
         var initial_passengers: Array[Passenger] = [] as Array[Passenger]
         for p_raw in room_raw["initial_passengers"]:
           var p = Passenger.new_passenger(p_raw["dest_room"] as int, p_raw["sprite_style"] as int)
-          p.name = "passenger_" + str(p.get_instance_id())
           initial_passengers.push_back(p)
 
         for p in initial_passengers:
@@ -65,12 +68,10 @@ func _ready() -> void:
 
         building_rooms.push_back(room_raw["room_id"] as int)
 
-      buildings.push_back(building_rooms)
+    buildings.push_back(building_rooms)
 
   $ElevatorLeft.register_opened_handler(elevator_opened)
   $ElevatorRight.register_opened_handler(elevator_opened)
-
-  # print(get_children())
 
 
 func _lookup_room_id(building_id: int, floor_id: int) -> int:
@@ -95,10 +96,10 @@ func _can_room_be_opened_from_side(_room_id: int, _direction: Elevator.COMMAND) 
 # * If return is not null, returns a valid, unparented, potentially shown/unshown Passenger node
 # @param passenger should be either null (no passenger), or valid, unparented, but still shown Passenger node.
 func elevator_opened(elevator_kind: Elevator.KIND, direction: Elevator.COMMAND, floor_number: int, passenger: Passenger) -> Passenger:
-  print("Elevator ", elevator_kind,
-        " opening ", "left" if direction == Elevator.COMMAND.LEFT else "right",
-        " on floor ", floor_number,
-        " passenger ", passenger)
+  # print("Elevator ", elevator_kind,
+  #       " opening ", "left" if direction == Elevator.COMMAND.LEFT else "right",
+  #       " on floor ", floor_number,
+  #       " passenger ", passenger)
 
   # ? Consider refactoring the lookup to a helper function
   var room_ref: Room = null
