@@ -5,12 +5,9 @@ class_name CoolQueue
 # maps position to name of child Passenger node
 var internal_array: Dictionary[int, String]
 
-func _init():
-  internal_array = {
-    0: "",
-    1: "",
-    2: "",
-  }
+func _init(queue_size: int):
+  for i in range(queue_size):
+    internal_array[i] = ""
 
 
 func _ready() -> void:
@@ -124,4 +121,11 @@ func get_size() -> int:
 
 # Called to render the room state (passengers inside the room)
 func get_passengers() -> Dictionary[int, Passenger]:
-  return internal_array.duplicate()
+  var ret: Dictionary[int, Passenger] = {} as Dictionary[int, Passenger]
+  for pos in internal_array.keys():
+    if internal_array[pos] != "":
+      ret[pos] = find_child(internal_array[pos], false, false)
+    else:
+      ret[pos] = null
+
+  return ret

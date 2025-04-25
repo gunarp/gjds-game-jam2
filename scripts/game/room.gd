@@ -21,7 +21,7 @@ func _init(room_num: int, init_passengers: Array):
   print(init_passengers)
   room_number = room_num
 
-  queue_ref = CoolQueue.new()
+  queue_ref = CoolQueue.new(3)
   add_child(queue_ref)
 
   # # !! divergence - cool queue is currently implemented to handle parenting of passenger nodes
@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 
 func pop_passenger(direction: Elevator.COMMAND) -> Passenger:
   var popped = queue_ref.pop_passenger(direction)
-  # popped.hide()
+  _assign_passenger_positions()
   return popped
 
 
@@ -56,7 +56,13 @@ func push_passenger(direction: Elevator.COMMAND, passenger: Passenger) -> void:
     passenger_arrived_at_destination.emit()
 
   queue_ref.push_passenger(direction, passenger)
-  # passenger.show()
+  _assign_passenger_positions()
+
+
+func _assign_passenger_positions() -> void:
+  var passengers = queue_ref.get_passengers()
+  # now place passengers in room based on their queue position
+  pass
 
 
 func is_full() -> bool:

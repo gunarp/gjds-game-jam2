@@ -23,6 +23,8 @@ var current_floor: int = 0
 var num_occupants = 0
 var max_occupants = 1
 
+var queue_ref: CoolQueue
+
 # TODO: Incorporate if implementing tweening
 enum STATE {IDLE, LOADING, MOVING}
 var state : STATE = STATE.IDLE
@@ -33,15 +35,18 @@ var temp_passenger: Passenger
 #endregion
 
 func _init() -> void:
-  temp_passenger = Passenger.new(4, 0)
-  add_child(temp_passenger)
-  num_occupants += 1
+  queue_ref = CoolQueue.new(1)
+  add_child(queue_ref)
 
 
 func _ready():
   var input_prefix: String = "LEFT_" if kind == KIND.LEFT else "RIGHT_"
   for key in input_table:
     input_table[key] = input_prefix + input_table[key]
+
+  temp_passenger = Passenger.new(4, 0)
+  temp_passenger.name = input_prefix + "temp_passenger"
+  queue_ref.push_passenger(COMMAND.LEFT, temp_passenger)
 
 
 var open_handler: Callable
@@ -68,23 +73,11 @@ func _increment_floor(inc: int):
 
 
 func _pop_passenger() -> Passenger:
-  if num_occupants == 0:
-    return null
-
-  var children = get_children()
-  for child in children:
-    if child is Passenger:
-      remove_child(child)
-      num_occupants -= 1
-      return child
-
-  return null
+  return queue_ref.pop_passenger(COMMAND.LEFT)
 
 
 func _push_passenger(p: Passenger) -> void:
-  add_child(p)
-  # p.show()
-  num_occupants += 1
+  queue_ref.push_passenger(COMMAND.LEFT, p)
 
 
 func _open_door(open_direction: COMMAND):
