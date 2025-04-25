@@ -116,12 +116,16 @@ func elevator_opened(elevator_kind: Elevator.KIND,  direction: Elevator.COMMAND,
   var ret: Passenger = null
   if passenger == null:
     # loading passenger from elevator
-    ret = room_ref.pop_passenger()
+    ret = room_ref.pop_passenger(direction)
   else:
     # unloading passenger from elevator
     if room_ref.is_full():
       # If the room is full, then we would swap passenger out with person in the room
-      ret = room_ref.pop_passenger()
-    room_ref.push_passenger(passenger)
+      ret = room_ref.pop_passenger(direction)
+      # If we're unable to pop from the room, then this is a no-op
+      if ret == null:
+        return passenger
+
+    room_ref.push_passenger(direction, passenger)
 
   return ret
