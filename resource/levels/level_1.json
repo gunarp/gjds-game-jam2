@@ -1,85 +1,99 @@
 {
-	"building_0": {
-		"floor_0": {
-			"room_id": 0,
-			"initial_passengers": [
-				{
-					"dest_room": 1,
-					"sprite_style": 3
-				},
-				{
-					"dest_room": 4,
-					"sprite_style": 0
-				}
-			]
-		},
-		"floor_1": {
-			"room_id": 1,
-			"initial_passengers": [
-			]
-		},
-		"floor_2": {
-			"room_id": 2,
-			"initial_passengers": [
-				{
-					"dest_room": 8,
-					"sprite_style": 5
-				},
-				{
-					"dest_room": 5,
-					"sprite_style": 1
-				}
-			]
-		}
+	"visual_data": {
+		"side_margin": 9,
+		"floor_margin": 4,
+		"room_width": 78,
+		"room_height": 50,
+		"elevator_width": 35
 	},
-	"building_1": {
-		"floor_0": {
-			"room_id": 3,
-			"initial_passengers": [
-			]
+	"buildings": [
+		{
+			"floor_0": {
+				"room_id": 0,
+				"max_size": 3,
+				"initial_passengers": [
+					{
+						"dest_room": 1,
+						"sprite_style": 3
+					},
+					{
+						"dest_room": 4,
+						"sprite_style": 0
+					}
+				]
+			},
+			"floor_1": {
+				"room_id": 1,
+				"max_size": 3,
+				"initial_passengers": []
+			},
+			"floor_2": {
+				"room_id": 2,
+				"max_size": 3,
+				"initial_passengers": [
+					{
+						"dest_room": 8,
+						"sprite_style": 5
+					},
+					{
+						"dest_room": 5,
+						"sprite_style": 1
+					}
+				]
+			}
 		},
-		"floor_1": {
-			"room_id": 4,
-			"initial_passengers": [
-				{
-					"dest_room": 0,
-					"sprite_style": 2
-				}
-			]
+		{
+			"floor_0": {
+				"room_id": 3,
+				"max_size": 3,
+				"initial_passengers": []
+			},
+			"floor_1": {
+				"room_id": 4,
+				"max_size": 3,
+				"initial_passengers": [
+					{
+						"dest_room": 0,
+						"sprite_style": 2
+					}
+				]
+			},
+			"floor_2": {
+				"room_id": 5,
+				"max_size": 3,
+				"initial_passengers": []
+			}
 		},
-		"floor_2": {
-			"room_id": 5,
-			"initial_passengers": [
-			]
+		{
+			"floor_0": {
+				"room_id": 6,
+				"max_size": 3,
+				"initial_passengers": []
+			},
+			"floor_1": {
+				"room_id": 7,
+				"max_size": 3,
+				"initial_passengers": [
+					{
+						"dest_room": 3,
+						"sprite_style": 3
+					},
+					{
+						"dest_room": 5,
+						"sprite_style": 3
+					},
+				]
+			},
+			"floor_2": {
+				"room_id": 8,
+				"max_size": 3,
+				"initial_passengers": [
+					{
+						"dest_room": 2,
+						"sprite_style": 4
+					},
+				]
+			}
 		}
-	},
-	"building_2": {
-		"floor_0": {
-			"room_id": 6,
-			"initial_passengers": [
-			]
-		},
-		"floor_1": {
-			"room_id": 7,
-			"initial_passengers": [
-				{
-					"dest_room": 3,
-					"sprite_style": 3
-				},
-				{
-					"dest_room": 5,
-					"sprite_style": 3
-				},
-			]
-		},
-		"floor_2": {
-			"room_id": 8,
-			"initial_passengers": [
-				{
-					"dest_room": 2,
-					"sprite_style": 4
-				},
-			]
-		}
-	}
+	]
 }

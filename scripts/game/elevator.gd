@@ -44,9 +44,9 @@ func _ready():
   for key in input_table:
     input_table[key] = input_prefix + input_table[key]
 
-  temp_passenger = Passenger.new(4, 0)
-  temp_passenger.name = input_prefix + "temp_passenger"
-  queue_ref.push_passenger(COMMAND.LEFT, temp_passenger)
+  # temp_passenger = Passenger.new(4, 0)
+  # temp_passenger.name = input_prefix + "temp_passenger"
+  # queue_ref.push_passenger(COMMAND.LEFT, temp_passenger)
 
 
 var open_handler: Callable
@@ -69,7 +69,7 @@ func _increment_floor(inc: int):
   current_floor += inc
 
   # animate (negative y direction is up)
-  position.y = position.y + -1 * inc * ($TextureRect.texture.get_size().y * scale.y)
+  position.y = position.y + -1 * inc * ($TextureRect.texture.get_size().y)
 
 
 func _pop_passenger() -> Passenger:
@@ -89,8 +89,8 @@ func _open_door(open_direction: COMMAND):
     if open_result != null:
       _push_passenger(open_result)
 
-    print("Elevator ", kind, " open_result = ", open_result)
-    print("=========")
+    # print("Elevator ", kind, " open_result = ", open_result)
+    # print("=========")
 
 
 func _process_inputs():
