@@ -2,24 +2,24 @@ extends Node2D
 
 class_name Elevator
 
-enum ELEVATOR_KIND {LEFT, RIGHT}
-enum ELEVATOR_COMMANDS {RIGHT, LEFT, UP, DOWN}
+enum KIND {LEFT, RIGHT}
+enum COMMAND {RIGHT, LEFT, UP, DOWN}
 
 const min_height = 0
 @export var max_height: int = 0
-@export var elevator_designation : ELEVATOR_KIND
+@export var kind : KIND
 var input_table : Dictionary = {
-  ELEVATOR_COMMANDS.RIGHT: "ELEVATOR_RIGHT",
-  ELEVATOR_COMMANDS.LEFT: "ELEVATOR_LEFT",
-  ELEVATOR_COMMANDS.UP: "ELEVATOR_UP",
-  ELEVATOR_COMMANDS.DOWN: "ELEVATOR_DOWN"
+  COMMAND.RIGHT: "ELEVATOR_RIGHT",
+  COMMAND.LEFT: "ELEVATOR_LEFT",
+  COMMAND.UP: "ELEVATOR_UP",
+  COMMAND.DOWN: "ELEVATOR_DOWN"
 }
 
 var current_floor: int = 0
 
-var occupancy: Array[Passenger] = []
-var max_occupancy = 1
-var is_empty = 1 # may be a redundant flag? thought it may be useful for animations
+# For nearly all cases this will end up staying at one
+var num_occupants = 0
+var max_occupants = 1
 
 # TODO: Incorporate if implementing tweening
 enum STATE {IDLE, LOADING, MOVING}
@@ -27,12 +27,17 @@ var state : STATE = STATE.IDLE
 
 
 func _ready():
-  var input_prefix: String = "LEFT_" if elevator_designation == ELEVATOR_KIND.LEFT else "RIGHT_"
+  var input_prefix: String = "LEFT_" if kind == KIND.LEFT else "RIGHT_"
   for key in input_table:
     input_table[key] = input_prefix + input_table[key]
 
 
+var open_handler: Callable
+func register_opened_handler(handler: Callable):
+  open_handler = handler
 
+
+#region input handling
 func _increment_floor(inc: int):
   # ? consider: if states are tweened then we might need to think about this
   # if state != STATE.IDLE:
@@ -40,31 +45,62 @@ func _increment_floor(inc: int):
 
   # check if we can do anything
   if (current_floor == min_height and inc < 0) or (current_floor == max_height and inc > 0):
-    print("Elevator ", elevator_designation, " cannot go ", "up" if inc > 0 else "down")
+    print("Elevator ", kind, " cannot go ", "up" if inc > 0 else "down")
     return
 
   # apply change to destination floor
   current_floor += inc
 
   # animate (negative y direction is up)
-  position.y = position.y + -1 * inc * ($TextureRect.texture.get_height() * global_scale.y)
+  position.y = position.y + -1 * inc * ($TextureRect.texture.get_size().y * scale.y)
 
 
-func _open_door(is_open_left: bool):
-  print("Elevator ", elevator_designation, " opening, ", "left" if is_open_left else "right")
+func _pop_passenger() -> Passenger:
+  if num_occupants == 0:
+    return null
+
+  var children = get_children()
+  for child in children:
+    if child is Passenger:
+      remove_child(child)
+      num_occupants -= 1
+      return child
+
+  return null
+
+
+func _open_door(open_direction: COMMAND):
+  # print("Elevator ", kind, " opening, ", "left" if is_open_left else "right")
   # TODO: Change state and load / unload elevator as appropriate
+  if open_handler.is_valid():
+    # feels kinda like an antipattern... it's weird behavior that
+    # the parenting is done by us if we have a new passenger,
+    # but that unparenting is handled by the callee
+    # pop the passenger from our tree, then pass into callee
+    var occupant = _pop_passenger()
+
+    var open_result : Passenger = open_handler.call(kind, open_direction, current_floor, occupant)
+    # print(open_result)
+    if open_result != null:
+      # TODO: Think about how to render the child
+      add_child(open_result)
+      num_occupants += 1
+
+
+func _process_inputs():
+  if Input.is_anything_pressed():
+    if Input.is_action_just_pressed(input_table[COMMAND.DOWN]):
+      _increment_floor(-1)
+    if Input.is_action_just_pressed(input_table[COMMAND.UP]):
+      _increment_floor(1)
+    if Input.is_action_just_pressed(input_table[COMMAND.LEFT]):
+      _open_door(COMMAND.LEFT)
+    if Input.is_action_just_pressed(input_table[COMMAND.RIGHT]):
+      _open_door(COMMAND.RIGHT)
+#endregion
 
 
 func _process(_delta: float):
-  if Input.is_anything_pressed():
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.DOWN]):
-      _increment_floor(-1)
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.UP]):
-      _increment_floor(1)
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.LEFT]):
-      _open_door(true)
-    if Input.is_action_just_pressed(input_table[ELEVATOR_COMMANDS.RIGHT]):
-      _open_door(false)
-
+  _process_inputs()
 
 # TODO: Likely need a notification handler to accept a new child node

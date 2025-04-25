@@ -24,10 +24,10 @@ scale = Vector2(3.2753, 3.89851)
 max_height = 2
 
 [node name="ElevatorRight" parent="." instance=ExtResource("4_x42e6")]
-position = Vector2(720, 439)
+position = Vector2(719, 439)
 scale = Vector2(3.25392, 3.89999)
 max_height = 2
-elevator_designation = 1
+kind = 1
 
 [node name="Node2D" type="Node2D" parent="."]
 
