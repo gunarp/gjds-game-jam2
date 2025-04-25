@@ -8,6 +8,8 @@ class_name Passenger
 var arrived: bool = false
 
 var happiness = 100
+# index of dest_floor = corresponding sprite frame
+var translation_arr = [2, 1, 0, 5, 4, 3, 8, 7, 6]
 
 func _to_string() -> String:
   return str(dest_id)
