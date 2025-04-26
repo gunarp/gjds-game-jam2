@@ -19,6 +19,7 @@ func _init() -> void:
   level_scene_uids = [
     "uid://bohsecfy8umiy",
     "uid://wm47v8wk118d",
+    "uid://bt5hute0hfd2s",
   ]
 
   next_level = load(level_scene_uids.pop_front())
