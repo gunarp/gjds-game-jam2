@@ -10,6 +10,7 @@ var next_level: LevelState
 @onready var shuffle_button_ref = $WinScreen/Reshuffle
 
 var time_elapsed: float = 0.0
+var time_elapsed_this_circuit: float = 0.0
 var ngp: bool = false
 
 const win_screen_uid = "uid://c8y66p74a8jh2"
@@ -61,7 +62,7 @@ func _switch_next_level() -> void:
   curr_level_ref.connect("level_complete", _on_level_completed)
 
   next_level = null
-
+  time_elapsed_this_circuit += time_elapsed
   time_elapsed = 0.0
 
 
@@ -73,18 +74,12 @@ func _on_start_pushed() -> void:
 
 
 func _on_level_completed() -> void:
-  # Thanks https://gamedevbeginner.com/how-to-make-a-timer-in-godot-count-up-down-in-minutes-seconds/
-  var format_time_lambda = func(time: float) -> String:
-    var minutes: int = int(time / 60)
-    var seconds: int = int(fmod(time, 60))
-    var millis: int = int(fmod(time, 1) * 100)
 
-    return "%02d:%02d.%02d" % [minutes, seconds, millis]
+  # Sound Effect from pixabay
+  # "https://pixabay.com/users/u_8g40a9z0la-45586904/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=234709"
+  $tada.play()
 
-  var time_taken = format_time_lambda.call(time_elapsed)
-
-  print("level completed in ", time_taken)
-  $LevelCompleteOverlay/TimerDisplay.change_display_time(time_taken)
+  $LevelCompleteOverlay/TimerDisplay.change_display_time(time_elapsed)
   $LevelCompleteOverlay.show()
   move_child($LevelCompleteOverlay, -1)
 
@@ -104,6 +99,7 @@ func _on_next_level_requested() -> void:
     old_level_ref.queue_free()
   else:
     $WinScreen.z_index = 101
+    $WinScreen/TimerDisplay.change_display_time(time_elapsed_this_circuit)
     $WinScreen.show()
     move_child($WinScreen, -1)
     remove_child(curr_level_ref)
@@ -114,6 +110,7 @@ func _on_reshuffle() -> void:
   $WinScreen.hide()
   ngp = true
   level_scene_info = level_map.duplicate() as Dictionary[String, String]
+  time_elapsed_this_circuit = 0.0
   _setup_next_level()
   _switch_next_level()
 

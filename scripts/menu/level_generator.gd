@@ -59,7 +59,7 @@ static func generate_level(level_id: int) -> Dictionary:
             dest_bank[dest_room] -= 1
             accepted = true
           else:
-            dest_bank = rng.randi_range(0, 8)
+            dest_room = rng.randi_range(0, 8)
 
         passengers.push_back({
           "dest_room": dest_room,

@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8y66p74a8jh2"]
+[gd_scene load_steps=4 format=3 uid="uid://c8y66p74a8jh2"]
 
 [ext_resource type="Texture2D" uid="uid://dgu0ak6dmx1m1" path="res://resource/temp_assets/load_in_background.png" id="1_dbu1v"]
+[ext_resource type="Script" uid="uid://bwi3w787k78i8" path="res://scripts/menu/stopwatch_display.gd" id="2_7nuyu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jlilc"]
+font_size = 17
 
 [node name="WinScreen" type="Control"]
 layout_mode = 3
@@ -25,11 +29,21 @@ offset_bottom = 158.0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 99.0
-offset_top = 75.0
-offset_right = 225.0
-offset_bottom = 98.0
+offset_left = 98.0
+offset_top = 41.0
+offset_right = 224.0
+offset_bottom = 64.0
 text = "You Won!! 🎉🛗"
+
+[node name="TimerDisplay" type="Label" parent="."]
+offset_left = 60.0
+offset_top = 73.0
+offset_right = 665.0
+offset_bottom = 156.0
+text = "Time Taken: "
+label_settings = SubResource("LabelSettings_jlilc")
+script = ExtResource("2_7nuyu")
+metadata/_custom_type_script = "uid://bwi3w787k78i8"
 
 [node name="Reshuffle" type="Button" parent="."]
 layout_mode = 0

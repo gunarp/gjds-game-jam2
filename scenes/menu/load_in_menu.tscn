@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bf2b8supwxq1n"]
+[gd_scene load_steps=5 format=3 uid="uid://bf2b8supwxq1n"]
 
 [ext_resource type="Texture2D" uid="uid://dgu0ak6dmx1m1" path="res://resource/temp_assets/load_in_background.png" id="1_icv44"]
-[ext_resource type="Texture2D" uid="uid://dyivma2a2vdr6" path="res://resource/assets/art/char_1.png" id="2_c6cfe"]
-[ext_resource type="Texture2D" uid="uid://bul6btrytyudt" path="res://resource/assets/art/smiley.png" id="2_sj073"]
+[ext_resource type="Texture2D" uid="uid://bii3jguudoo47" path="res://resource/assets/art/title_screen_elevators.png" id="2_uhn8o"]
+[ext_resource type="Texture2D" uid="uid://jg6pwet37u56" path="res://resource/assets/art/start_button_mainmenu.png" id="3_sj073"]
+[ext_resource type="Texture2D" uid="uid://cs3h2b0ucf2bp" path="res://resource/assets/art/start_button_mainmenu_hover.png" id="4_uhn8o"]
 
 [node name="LoadInMenu" type="Control"]
 layout_mode = 3
@@ -18,21 +19,18 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_icv44")
 
-[node name="StartButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 127.0
-offset_top = 116.0
-offset_right = 188.0
-offset_bottom = 147.0
-button_mask = 7
-text = "Start"
-icon = ExtResource("2_sj073")
-
 [node name="Title" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 36.0
-offset_right = 174.0
-offset_bottom = 76.0
-scale = Vector2(1.27093, 1.76486)
-texture = ExtResource("2_c6cfe")
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("2_uhn8o")
+
+[node name="StartButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 98.0
+offset_right = 152.0
+offset_bottom = 138.0
+button_mask = 7
+texture_normal = ExtResource("3_sj073")
+texture_hover = ExtResource("4_uhn8o")
