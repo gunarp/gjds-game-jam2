@@ -10,7 +10,10 @@ var arrived: bool = false
 
 var happiness = 100
 # index of dest_floor = corresponding sprite frame
-var translation_arr = [2, 1, 0, 5, 4, 3, 8, 7, 6]
+var sprite_translation_arr = [2, 1, 0, 5, 4, 3, 8, 7, 6]
+# [x, y]
+var bubble_offset_arr = [[-3,-15], [-3,-14], [-1,-16], [-2,-18], [-2,-17], [-2,-16]]
+
 
 func _to_string() -> String:
   return "dest room: " + str(dest_id)
@@ -27,11 +30,12 @@ static func new_passenger(dest_room: int, sprite_style: int) -> Passenger:
 
 
 func _ready() -> void:
-  var sprite_count = style * 9 + translation_arr[dest_id]
+  var sprite_count = style * 9 + sprite_translation_arr[dest_id]
+  var bubble_offset_vector = Vector2(bubble_offset_arr[style][0], bubble_offset_arr[style][1])
   # print(self.get_instance_id(), " ready children: ", get_children(true))
   # print()
-  var sprite = get_node("Sprite")
-  sprite.set_frame(sprite_count)
+  $Sprite.set_frame(sprite_count)
+  $HappyBubble.translate(bubble_offset_vector)
 
 
 func get_y_offset() -> float:
@@ -44,8 +48,8 @@ func change_dest(dest: Vector2):
 
 
 func display_happy_bubble():
-  var bubble = get_node("Happy")
-  bubble.set_visible(true)
+  $HappyBubble.set_visible(true)
+  $HappyBubble.play()
 
 
 func _process(_delta: float):
