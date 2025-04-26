@@ -1,10 +1,56 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8y66p74a8jh2"]
+[gd_scene load_steps=10 format=3 uid="uid://c8y66p74a8jh2"]
 
 [ext_resource type="Texture2D" uid="uid://dgu0ak6dmx1m1" path="res://resource/temp_assets/load_in_background.png" id="1_dbu1v"]
 [ext_resource type="Script" uid="uid://bwi3w787k78i8" path="res://scripts/menu/stopwatch_display.gd" id="2_7nuyu"]
+[ext_resource type="Texture2D" uid="uid://cjpswsa317fwa" path="res://resource/assets/art/tada_sprite_sheet.png" id="3_jlilc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jlilc"]
 font_size = 17
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5gba"]
+atlas = ExtResource("3_jlilc")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0s4ab"]
+atlas = ExtResource("3_jlilc")
+region = Rect2(25, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgynw"]
+atlas = ExtResource("3_jlilc")
+region = Rect2(50, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpea4"]
+atlas = ExtResource("3_jlilc")
+region = Rect2(75, 0, 25, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7nuyu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5gba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5gba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0s4ab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgynw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpea4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpea4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpea4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="WinScreen" type="Control"]
 layout_mode = 3
@@ -33,9 +79,11 @@ offset_left = 98.0
 offset_top = 41.0
 offset_right = 224.0
 offset_bottom = 64.0
-text = "You Won!! 🎉🛗"
+text = "You Won!!"
+horizontal_alignment = 1
 
 [node name="TimerDisplay" type="Label" parent="."]
+layout_mode = 0
 offset_left = 60.0
 offset_top = 73.0
 offset_right = 665.0
@@ -52,3 +100,16 @@ offset_top = 109.0
 offset_right = 225.0
 offset_bottom = 140.0
 text = "Reshuffle levels"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 7
+position = Vector2(98, 53)
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_7nuyu")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+z_index = 7
+position = Vector2(226, 53)
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_7nuyu")
+flip_h = true
