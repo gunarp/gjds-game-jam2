@@ -1,16 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4gmnfmha0w34"]
+[gd_scene load_steps=6 format=3 uid="uid://c4gmnfmha0w34"]
 
-[ext_resource type="PackedScene" uid="uid://bohsecfy8umiy" path="res://scenes/levels/level_1.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cixtr8pj5qql5" path="res://scripts/menu/main.gd" id="1_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://b34w5yim6lcs8" path="res://resource/assets/sound/bossanova_2.mp3" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://bf2b8supwxq1n" path="res://scenes/menu/load_in_menu.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://boguxrjptho46" path="res://scenes/menu/level_complete_overlay.tscn" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://c8y66p74a8jh2" path="res://scenes/menu/win_screen.tscn" id="5_tbgi4"]
 
 [node name="Main" type="Node"]
-
-[node name="Level1" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(0, -3)
-scale = Vector2(4, 4)
+script = ExtResource("1_jyhfs")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_0wfyh")
 volume_db = -1.56
 autoplay = true
 parameters/looping = true
+
+[node name="LoadInMenu" parent="." instance=ExtResource("3_sugp2")]
+scale = Vector2(4, 4)
+
+[node name="LevelCompleteOverlay" parent="." instance=ExtResource("4_jyhfs")]
+visible = false
+
+[node name="WinScreen" parent="." instance=ExtResource("5_tbgi4")]
+visible = false
+scale = Vector2(4, 4)

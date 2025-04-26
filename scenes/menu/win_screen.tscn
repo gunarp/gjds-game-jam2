@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8y66p74a8jh2"]
+
+[ext_resource type="Texture2D" uid="uid://dgu0ak6dmx1m1" path="res://resource/temp_assets/load_in_background.png" id="1_dbu1v"]
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_dbu1v")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 16.0
+offset_right = 284.0
+offset_bottom = 158.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 75.0
+offset_right = 225.0
+offset_bottom = 98.0
+text = "You Won!! 🎉🛗"

@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://boguxrjptho46"]
+
+[ext_resource type="Script" uid="uid://bwi3w787k78i8" path="res://scripts/menu/stopwatch_display.gd" id="1_oes5g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fvxwl"]
+font_size = 60
+
+[sub_resource type="LabelSettings" id="LabelSettings_oes5g"]
+font_size = 60
+
+[node name="LevelCompleteOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(31.9593, 17.9893)
+
+[node name="Good job message" type="Label" parent="."]
+layout_mode = 0
+offset_left = 392.0
+offset_top = 160.0
+offset_right = 880.0
+offset_bottom = 242.0
+text = "Rooms Balanced!"
+label_settings = SubResource("LabelSettings_fvxwl")
+
+[node name="TimerDisplay" type="Label" parent="."]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 294.0
+offset_right = 949.0
+offset_bottom = 377.0
+text = "Time Taken: "
+label_settings = SubResource("LabelSettings_oes5g")
+script = ExtResource("1_oes5g")
+metadata/_custom_type_script = "uid://bwi3w787k78i8"
+
+[node name="NextLevelButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 445.0
+offset_right = 620.0
+offset_bottom = 476.0
+scale = Vector2(2.23867, 2.23867)
+button_mask = 7
+text = "Go to next level"
