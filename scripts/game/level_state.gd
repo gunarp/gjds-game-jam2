@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 class_name LevelState
 
@@ -18,14 +18,15 @@ class_name LevelState
 
 @export_file("*.json") var initial_level_json
 
+signal level_complete
+
 # * Maps Building identifier to list of rooms in building
 # * The index of the list is the floor the room is located on
 # * If there is no room on that floor, the room id will be -1
 var buildings: Array[Array]
 
-
-func _init() -> void:
-  pass
+var passenger_count: int = 0
+var arrived_count: int = 0
 
 
 func _ready() -> void:
@@ -49,29 +50,34 @@ func _ready() -> void:
       else:
         # ? Quite a bit of opportunity to clean this up later
 
-
         var room = Room.new(room_raw["room_id"] as int, room_raw["max_size"] as int, room_dims)
-
         # Position is set to top left corner of room
         room.position.x = side_margin + (buildings.size() * (room_dims.x + elevator_width))
         room.position.y = max_y - floor_margin - ((building_rooms.size() + 1) * room_dims.y) - 1
-
         add_child(room)
 
         var initial_passengers: Array[Passenger] = [] as Array[Passenger]
         for p_raw in room_raw["initial_passengers"]:
           var p = Passenger.new_passenger(p_raw["dest_room"] as int, p_raw["sprite_style"] as int)
           initial_passengers.push_back(p)
+          passenger_count += 1
 
         for p in initial_passengers:
           room.push_passenger(Elevator.COMMAND.RIGHT, p)
 
+        room.connect("passenger_arrived_at_destination", _on_passenger_arrived)
         building_rooms.push_back(room_raw["room_id"] as int)
 
     buildings.push_back(building_rooms)
 
   $ElevatorLeft.register_opened_handler(elevator_opened)
   $ElevatorRight.register_opened_handler(elevator_opened)
+
+
+func _on_passenger_arrived() -> void:
+  arrived_count += 1
+  if arrived_count == passenger_count:
+    level_complete.emit()
 
 
 func _lookup_room_id(building_id: int, floor_id: int) -> int:
