@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bt5hute0hfd2s"]
+
+[ext_resource type="Script" uid="uid://de6ogvo5ucgl8" path="res://scripts/game/level_state.gd" id="1_0ljxa"]
+[ext_resource type="Texture2D" uid="uid://cq0fweks321nv" path="res://resource/assets/art/elevators_4.png" id="2_0qepi"]
+[ext_resource type="PackedScene" uid="uid://vfhxw5n8bujt" path="res://scenes/game/elevator.tscn" id="3_fmg3e"]
+
+[node name="Level3" type="Node2D"]
+physics_interpolation_mode = 2
+script = ExtResource("1_0ljxa")
+initial_level_json = "res://resource/levels/level_1.json"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("2_0qepi")
+stretch_mode = 2
+
+[node name="ElevatorLeft" parent="." instance=ExtResource("3_fmg3e")]
+position = Vector2(87, 126)
+max_height = 2
+
+[node name="ElevatorRight" parent="." instance=ExtResource("3_fmg3e")]
+position = Vector2(200, 126)
+max_height = 2
+kind = 1

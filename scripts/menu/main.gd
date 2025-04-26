@@ -18,7 +18,7 @@ const win_screen_uid = "uid://c8y66p74a8jh2"
 func _init() -> void:
   level_scene_uids = [
     "uid://bohsecfy8umiy",
-    "uid://bohsecfy8umiy"
+    "uid://wm47v8wk118d",
   ]
 
   next_level = load(level_scene_uids.pop_front())
@@ -58,7 +58,7 @@ func _on_level_completed() -> void:
     var seconds: int = int(fmod(time, 60))
     var millis: int = int(fmod(time, 1) * 100)
 
-    return "%02d:%02d:%02d" % [minutes, seconds, millis]
+    return "%02d:%02d.%02d" % [minutes, seconds, millis]
 
   var time_taken = format_time_lambda.call(time_elapsed)
 

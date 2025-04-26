@@ -27,7 +27,10 @@ static func new_passenger(dest_room: int, sprite_style: int) -> Passenger:
 
 
 func _ready() -> void:
+  # style is row
+  # dest is column
   var sprite_count = style * 9 + translation_arr[dest_id]
+  print(self, " ", style, " ", sprite_count)
   # print(self.get_instance_id(), " ready children: ", get_children(true))
   # print()
   var sprite = get_node("Sprite")
