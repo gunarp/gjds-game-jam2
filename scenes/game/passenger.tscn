@@ -1,8 +1,72 @@
-[gd_scene load_steps=4 format=3 uid="uid://o2weteelt0wc"]
+[gd_scene load_steps=13 format=3 uid="uid://o2weteelt0wc"]
 
 [ext_resource type="Script" uid="uid://5o1xnjp6defq" path="res://scripts/game/passenger.gd" id="1_uv8fa"]
 [ext_resource type="Texture2D" uid="uid://bes2if2e5mr7a" path="res://resource/assets/art/sprite_sheet.png" id="2_65jby"]
-[ext_resource type="Texture2D" uid="uid://bul6btrytyudt" path="res://resource/assets/art/smiley.png" id="3_65jby"]
+[ext_resource type="Texture2D" uid="uid://bo2l3nygs2bej" path="res://resource/assets/art/happy_bubble_sprite_sheet.png" id="4_1kr54"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4lkr"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(0, 0, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iei3y"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(11, 0, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frn8k"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(22, 0, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3ju5"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(33, 0, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_085eh"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(0, 13, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15yf3"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(11, 13, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1myc6"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(22, 13, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nt4d2"]
+atlas = ExtResource("4_1kr54")
+region = Rect2(33, 13, 11, 13)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i51po"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4lkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iei3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frn8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3ju5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_085eh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15yf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1myc6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nt4d2")
+}],
+"loop": true,
+"name": &"happy_bubble",
+"speed": 4.17
+}]
 
 [node name="Passenger" type="Node2D"]
 script = ExtResource("1_uv8fa")
@@ -13,8 +77,7 @@ hframes = 9
 vframes = 6
 frame = 53
 
-[node name="Happy" type="Sprite2D" parent="."]
+[node name="HappyBubble" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2(-3, -14)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_65jby")
+sprite_frames = SubResource("SpriteFrames_i51po")
+animation = &"happy_bubble"
