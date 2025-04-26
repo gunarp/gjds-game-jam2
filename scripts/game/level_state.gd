@@ -28,19 +28,27 @@ var buildings: Array[Array]
 var passenger_count: int = 0
 var arrived_count: int = 0
 
+# if null, default to static json
+static func make_level(level_data: Dictionary, scene_path: String) -> LevelState:
+  var scene: PackedScene = load(scene_path)
+  var ret: LevelState = scene.instantiate()
+  ret.load_state_from_dict(level_data)
 
-func _ready() -> void:
-  # json parse code from https://forum.godotengine.org/t/how-i-read-and-show-a-content-of-a-json-file-in-godot-4/2986
-  var json_as_text = FileAccess.get_file_as_string(initial_level_json)
-  var json_as_dict = JSON.parse_string(json_as_text)
+  return ret
 
-  var max_y = json_as_dict["visual_data"]["max_y"] as int
-  var side_margin = json_as_dict["visual_data"]["side_margin"] as int
-  var floor_margin = json_as_dict["visual_data"]["floor_margin"] as int
-  var elevator_width = json_as_dict["visual_data"]["elevator_width"] as int
-  var room_dims = Vector2(json_as_dict["visual_data"]["room_width"] as int, json_as_dict["visual_data"]["room_height"] as int)
 
-  for building in json_as_dict["buildings"]:
+# json parse code from https://forum.godotengine.org/t/how-i-read-and-show-a-content-of-a-json-file-in-godot-4/2986
+  # var json_as_text = FileAccess.get_file_as_string(initial_level_json)
+  # var json_as_dict = JSON.parse_string(json_as_text)
+
+func load_state_from_dict(start_state: Dictionary) -> void:
+  var max_y = start_state["visual_data"]["max_y"] as int
+  var side_margin = start_state["visual_data"]["side_margin"] as int
+  var floor_margin = start_state["visual_data"]["floor_margin"] as int
+  var elevator_width = start_state["visual_data"]["elevator_width"] as int
+  var room_dims = Vector2(start_state["visual_data"]["room_width"] as int, start_state["visual_data"]["room_height"] as int)
+
+  for building in start_state["buildings"]:
     var building_rooms = []
 
     for floor_id in building:
@@ -70,6 +78,8 @@ func _ready() -> void:
 
     buildings.push_back(building_rooms)
 
+
+func _ready() -> void:
   $ElevatorLeft.register_opened_handler(elevator_opened)
   $ElevatorRight.register_opened_handler(elevator_opened)
 

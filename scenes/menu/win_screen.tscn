@@ -30,3 +30,11 @@ offset_top = 75.0
 offset_right = 225.0
 offset_bottom = 98.0
 text = "You Won!! 🎉🛗"
+
+[node name="Reshuffle" type="Button" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 109.0
+offset_right = 225.0
+offset_bottom = 140.0
+text = "Reshuffle levels"

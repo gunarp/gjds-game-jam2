@@ -1,33 +1,52 @@
 extends Node
 
-# store current scene, start pointing at load in menu
-# array for level sequences
-# consume level complete signal to iterate through the array
-
-var level_scene_uids: Array[String]
-var next_level: PackedScene
-var current_level_ref: LevelState
+# Maps level scene uid to relevant startig json
+var level_scene_info: Dictionary[String, String]
+var curr_level_ref: LevelState
+var next_level: LevelState
 
 @onready var start_button_ref = $LoadInMenu/StartButton
 @onready var next_button_ref = $LevelCompleteOverlay/NextLevelButton
+@onready var shuffle_button_ref = $WinScreen/Reshuffle
 
 var time_elapsed: float = 0.0
+var ngp: bool = false
 
 const win_screen_uid = "uid://c8y66p74a8jh2"
 
-func _init() -> void:
-  level_scene_uids = [
-    "uid://bohsecfy8umiy",
-    "uid://wm47v8wk118d",
-    "uid://bt5hute0hfd2s",
-  ]
+const level_map: Dictionary[String, String] = {
+    "uid://bohsecfy8umiy": "res://resource/levels/level_1.json",
+    "uid://wm47v8wk118d": "res://resource/levels/level_2.json",
+    "uid://bt5hute0hfd2s": "res://resource/levels/level_3.json",
+}
 
-  next_level = load(level_scene_uids.pop_front())
+
+func _setup_next_level():
+  if level_scene_info.is_empty():
+    return
+
+  var head = level_scene_info.keys()[0]
+  var init_state
+  if ngp:
+    init_state = LevelGenerator.generate_level(3 - (level_scene_info.size() - 1))
+  else:
+    var json_text = FileAccess.get_file_as_string(level_scene_info[head])
+    init_state = JSON.parse_string(json_text)
+
+  next_level = LevelState.make_level(init_state, head)
+  level_scene_info.erase(head)
+
+
+func _init() -> void:
+  level_scene_info = level_map.duplicate() as Dictionary[String, String]
+  _setup_next_level()
 
 
 func _ready() -> void:
   start_button_ref.connect("pressed", _on_start_pushed)
   next_button_ref.connect("pressed", _on_next_level_requested)
+  shuffle_button_ref.connect("pressed", _on_reshuffle)
+
   $LevelCompleteOverlay.z_index = 100
 
 
@@ -36,10 +55,11 @@ func _scale_to_screen(n: Node2D) -> void:
 
 
 func _switch_next_level() -> void:
-  current_level_ref = next_level.instantiate() as LevelState
-  add_child(current_level_ref)
-  _scale_to_screen(current_level_ref)
-  current_level_ref.connect("level_complete", _on_level_completed)
+  curr_level_ref = next_level
+  add_child(curr_level_ref)
+  _scale_to_screen(curr_level_ref)
+  curr_level_ref.connect("level_complete", _on_level_completed)
+
   next_level = null
 
   time_elapsed = 0.0
@@ -68,17 +88,14 @@ func _on_level_completed() -> void:
   $LevelCompleteOverlay.show()
   move_child($LevelCompleteOverlay, -1)
 
-  if not level_scene_uids.is_empty():
-    next_level = load(level_scene_uids.pop_front())
-  else:
-    next_level = null
+  _setup_next_level()
 
 
 func _on_next_level_requested() -> void:
   print("next level requested")
   $LevelCompleteOverlay.hide()
   if next_level != null:
-    var old_level_ref = current_level_ref
+    var old_level_ref = curr_level_ref
     old_level_ref.disconnect("level_complete", _on_level_completed)
 
     _switch_next_level()
@@ -88,8 +105,17 @@ func _on_next_level_requested() -> void:
   else:
     $WinScreen.z_index = 101
     $WinScreen.show()
-    remove_child(current_level_ref)
-    current_level_ref.queue_free()
+    move_child($WinScreen, -1)
+    remove_child(curr_level_ref)
+    curr_level_ref.queue_free()
+
+
+func _on_reshuffle() -> void:
+  $WinScreen.hide()
+  ngp = true
+  level_scene_info = level_map.duplicate() as Dictionary[String, String]
+  _setup_next_level()
+  _switch_next_level()
 
 
 func _process(delta: float) -> void:
