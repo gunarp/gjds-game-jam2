@@ -15,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.25, 0.25)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -25,20 +26,22 @@ scale = Vector2(31.9593, 17.9893)
 [node name="Good job message" type="Label" parent="."]
 layout_mode = 0
 offset_left = 392.0
-offset_top = 160.0
-offset_right = 880.0
-offset_bottom = 242.0
+offset_top = 172.0
+offset_right = 888.0
+offset_bottom = 255.0
 text = "Rooms Balanced!"
 label_settings = SubResource("LabelSettings_fvxwl")
 
 [node name="TimerDisplay" type="Label" parent="."]
 layout_mode = 0
-offset_left = 344.0
-offset_top = 294.0
-offset_right = 949.0
-offset_bottom = 377.0
+offset_left = 328.0
+offset_top = 308.0
+offset_right = 952.0
+offset_bottom = 391.0
 text = "Time Taken: "
 label_settings = SubResource("LabelSettings_oes5g")
+horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("1_oes5g")
 metadata/_custom_type_script = "uid://bwi3w787k78i8"
 
@@ -46,8 +49,8 @@ metadata/_custom_type_script = "uid://bwi3w787k78i8"
 layout_mode = 0
 offset_left = 450.0
 offset_top = 445.0
-offset_right = 620.0
-offset_bottom = 476.0
+offset_right = 619.0
+offset_bottom = 496.0
 scale = Vector2(2.23867, 2.23867)
 button_mask = 7
 text = "Go to next level"

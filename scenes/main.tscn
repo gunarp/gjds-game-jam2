@@ -17,14 +17,12 @@ autoplay = true
 parameters/looping = true
 
 [node name="LoadInMenu" parent="." instance=ExtResource("3_sugp2")]
-scale = Vector2(4, 4)
 
 [node name="LevelCompleteOverlay" parent="." instance=ExtResource("4_jyhfs")]
 visible = false
 
 [node name="WinScreen" parent="." instance=ExtResource("5_tbgi4")]
 visible = false
-scale = Vector2(4, 4)
 
 [node name="tada" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_tefeu")

@@ -47,12 +47,11 @@ func _ready() -> void:
   start_button_ref.connect("pressed", _on_start_pushed)
   next_button_ref.connect("pressed", _on_next_level_requested)
   shuffle_button_ref.connect("pressed", _on_reshuffle)
-
   $LevelCompleteOverlay.z_index = 100
 
 
 func _scale_to_screen(n: Node2D) -> void:
-  n.apply_scale(Vector2(4, 4))
+  n.apply_scale(Vector2(1, 1))
 
 
 func _switch_next_level() -> void:
