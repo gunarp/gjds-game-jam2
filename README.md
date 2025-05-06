@@ -3,13 +3,9 @@
 
 Control two elevators simultaneously and get people where they need to go! Feel the rise and fall with relaxing funk.
 
-Elevator Elevator was made during Gamedev.js Jam 2025.
+Elevator Elevator was made during [Gamedev.js Jam 2025](https://itch.io/jam/gamedevjs-2025).
 
-# 💻💻 Setup
-1. Download [Godot 4.4](https://godotengine.org/download/archive/4.4-stable/)
-2. Clone repo
-3. Open project.godot
-4. Run game in godot editor, or make your own changes
+## [Play on itch.io](https://sunnbursts.itch.io/elevator-elevator)
 
 # ⌨️⌨️ How To Play:
 ![](static/gameplay.gif)
@@ -26,6 +22,11 @@ Hints:
 
 P.S. Secret ~~tunnel~~ at the end!
 
+# 💻💻 Repo setup
+1. Download [Godot 4.4](https://godotengine.org/download/archive/4.4-stable/)
+2. Clone repo
+3. Open project.godot
+4. Run game in godot editor, or make your own changes
 
 # 🎨🎨 Acknowledgements
 - Tada Sound Effect by [u_8g40a9z0la](https://pixabay.com/users/u_8g40a9z0la-45586904/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=234709) from Pixabay
